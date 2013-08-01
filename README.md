@@ -1,3 +1,4 @@
-Ohjelmoinnin harjoitustyö, loppukesä 2013
+Ohjelmoinnin harjoitustyö
+
 ====
 
