@@ -2,6 +2,7 @@
 package muistipeli.kayttoliittyma;
 
 import javax.swing.SwingUtilities;
+import muistipeli.sovelluslogiikka.Muistipelikortit;
 
 /**
  * Ohjelmoinnin harjoitustyö, syksy 2013
@@ -9,16 +10,14 @@ import javax.swing.SwingUtilities;
  * 
  * @author Anu Nikkanen
  */
+
+        
 public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-  
     public static void main(String[] args) {
-    
-        Kayttoliittyma kali = new Kayttoliittyma();
+   
+        Muistipelikortit peli = new Muistipelikortit();    
+        Kayttoliittyma kali = new Kayttoliittyma(peli);
         SwingUtilities.invokeLater(kali);
+        
     }
-
 }

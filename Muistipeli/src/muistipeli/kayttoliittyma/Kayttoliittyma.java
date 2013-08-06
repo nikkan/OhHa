@@ -9,18 +9,23 @@ package muistipeli.kayttoliittyma;
  */
 
 
+// importtaa tarvittavat luokat, esim. import sovelluslogiikka.jotakin;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.*;
+import muistipeli.sovelluslogiikka.Muistipelikortit;
+
 
 public class Kayttoliittyma implements Runnable {
     private JFrame frame;
-    private JButton yksi, kaksi, kolme, nelja;
+    private JButton yksi, kaksi, kolme, nelja; 
+    private Muistipelikortit kortit;
     
-    public Kayttoliittyma() {
-        
+   
+    public Kayttoliittyma(Muistipelikortit pelilauta) {
+        this.kortit = pelilauta;
     }
 
     @Override
@@ -47,19 +52,22 @@ public class Kayttoliittyma implements Runnable {
         JLabel alateksti = new JLabel("Alatekstikenttä");
         container.add(alateksti);
         
-        KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(this.yksi, this.kaksi, this.kolme, this.nelja);
-        this.yksi.addActionListener(kuuntelija);
+        KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(this.kortit, this.yksi, this.kaksi, this.kolme, this.nelja);
+        this.yksi.addActionListener(kuuntelija); // copypastea?
         this.kaksi.addActionListener(kuuntelija);
         this.kolme.addActionListener(kuuntelija);
         this.nelja.addActionListener(kuuntelija);  
+        
+        // huom! lisää se 'set resizable false'-juttu!!
     }
     
     private JPanel luoNappaimet() {
-        JPanel panel = new JPanel(new GridLayout(3,3));
-        panel.add(this.yksi = new JButton(" ")); // pystyisikö näille antamaan arvoja muualta?
-        panel.add(this.kaksi = new JButton(" "));
-        panel.add(this.kolme = new JButton(" "));
-        panel.add(this.nelja = new JButton(" "));
+        JPanel panel = new JPanel(new GridLayout(3,3)); // pystyisikö tämän panelin välittämään; ei jokaista erikseen?
+       
+        panel.add(this.yksi = new JButton(kortit.annaKaantopuoli(0, 1))); // copypastea?
+        panel.add(this.kaksi = new JButton(kortit.annaKaantopuoli(0, 1)));
+        panel.add(this.kolme = new JButton(kortit.annaKaantopuoli(1, 0)));
+        panel.add(this.nelja = new JButton(kortit.annaKaantopuoli(1, 1)));
         
         return panel;
     }
@@ -70,4 +78,3 @@ public class Kayttoliittyma implements Runnable {
     
     
 }
-
