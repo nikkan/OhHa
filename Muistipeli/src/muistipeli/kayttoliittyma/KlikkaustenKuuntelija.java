@@ -3,130 +3,104 @@ package muistipeli.kayttoliittyma;
 
 /**
  * Ohjelmoinnin harjoitustyö, syksy 2013
- * VIELÄ HYYYYVIN ALKUVAIHEESSA, LÄHINNÄ OMAA TESTAILUA...
+ * KESKEN VIELÄ. EI PISTEIDEN LASKUA YMS. TOIMINNASSA + FIKSATTU KENTÄN
+ * KOKO YMS.
+ * 
+ * 
  * @author Anu Nikkanen
  */
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import javax.swing.JButton;
-import muistipeli.sovelluslogiikka.Muistipelikortit;
-import muistipeli.sovelluslogiikka.OmaPistelaskuri;
+import javax.swing.JLabel;
+//import muistipeli.sovelluslogiikka.Muistipelikortit;
+//import muistipeli.sovelluslogiikka.OmaPistelaskuri;
 
-// TÄTÄ LUOKKAA PITÄÄ JÄRKEISTÄÄ; LIIKAA MUUTTUJIA JA TOISTOA!!! 
-// LIIAN 'FIKSATTU' RATKAISU, PITÄÄ SAADA YLEISKÄYTTÖISEMMÄKSI JA
-// SELKEÄMMÄKSI
-// MIETI, MITEN JBUTTONIT VOISI SAADA JÄRKEVÄMMIN VÄLITETTYÄ TÄNNE JA 
-// KÄSITELTYÄ/LISÄTTYÄ TOIMINNALLISUUKSIA.
         
 public class KlikkaustenKuuntelija implements ActionListener {
-    private JButton eka; 
-    private JButton toka;
-    private JButton kolmas;
-    private JButton neljas;
-    private OmaPistelaskuri laskin;
+    private HashMap<JButton, String> napit;
     private int kierros;
-    private String muuttuja1;
-    private String muuttuja2;
-    private Muistipelikortit kortit;
-    private JButton lahde1;
-    private JButton lahde2;
-    private int x1, x2, y1, y2;
+    private JButton ekaNappi;
+    private JButton tokaNappi;
+    private String lahde1;
+    private String lahde2;
+    private JLabel alateksti;
           
     
-    public KlikkaustenKuuntelija(Muistipelikortit lauta, JButton eka, JButton toka, JButton kolmas, JButton neljas) { // tarvitseeko tälle välittää pistelaskuri?
-        this.eka = eka;
-        this.toka = toka;
-        this.kolmas = kolmas;
-        this.neljas = neljas;
+    public KlikkaustenKuuntelija(HashMap<JButton, String> yksi, JLabel alapalkki) { // tarvitseeko tälle välittää pistelaskuri?
+        this.napit = yksi;
         this.kierros = 0;
-        this.x1 = 0;
-        this.x2 = 0;
-        this.y1 = 0;
-        this.y2 = 0;
-        this.muuttuja1 = "0";
-        this.muuttuja2 = "0";
-        this.kortit = lauta;
+        this.lahde1 = " "; // vakioksi tjms?
+        this.lahde2 = " ";        
+        this.alateksti = alapalkki;
         //this.laskin = laskuri;
     }
     
     @Override
     public void actionPerformed(ActionEvent ae) {
         
+        System.out.println("kierros: "+kierros);
+        
+        
+        if (kierros == 2 && onkoPari() == false) { // saisiko tätä vielä järkeistettyä ja vähennettyä copypastea?
+            ekaNappi.setEnabled(true);
+            tokaNappi.setEnabled(true);
+            kierros = 0;
+            this.lahde1 = " ";
+            this.lahde2 = " ";
+        }
+        
         if (kierros == 2 && onkoPari() == true) {
-            this.kortit.vaihdaArvoa(x1, y1);
-            this.kortit.vaihdaArvoa(x2, y2);
-            this.muuttuja1 = "0";
-            this.muuttuja2 = "0";
-            this.kierros = 0;
+            //n.setEnabled(false);
+            //m.setEnabled(false);
+            this.lahde1 = " ";
+            this.lahde2 = " ";
+            kierros = 0;
+        } 
+        
+        for (JButton jButton : napit.keySet()) {
+                if (ae.getSource() == jButton ) {
+                    jButton.setEnabled(false);
+                    tallenna(this.napit.get(jButton), jButton);
+                    kierros++;  
+                }
+          
+        } 
+        // muualle? esim. laskuri-luokkaan tarkistusmetodi?
+        int laskuri = 0;
+        for (JButton j : napit.keySet()) {
+            if (j.isEnabled() == false ) {
+                laskuri++;
+            }
+            
+        } if (laskuri == 6) {
+            this.alateksti.setText("Wohoo!");
+            
         }
         
-        if (kierros == 2 && onkoPari() == false) {
-            this.eka.setText(kortit.annaKaantopuoli(0, 0));
-            this.toka.setText(kortit.annaKaantopuoli(0, 1));
-            this.kolmas.setText(kortit.annaKaantopuoli(1, 0));
-            this.neljas.setText(kortit.annaKaantopuoli(1, 1));
-            this.muuttuja1 = "0";
-            this.muuttuja2 = "0";
-            this.kierros = 0;
+        
+     
+    }
+    
+    // NÄMÄ PITÄÄ SAADA TÄÄLTÄ POIS!?
+    public void tallenna(String tiedosto, JButton nappi) {
+        if (this.lahde1.equals(" ")) {
+            this.lahde1 = tiedosto;
+            this.ekaNappi = nappi;
+        } else {
+            this.lahde2 = tiedosto;
+            this.ekaNappi = nappi;     
         }
         
- 
-        if (ae.getSource() == this.eka) {
-            this.eka.setText(kortit.annaOikeaPuoli(0,0)); // COPYPASTEA --> LISÄÄ METODI/LUOKKA...
-            kasvataKierrosta();
-            talletaMuuttujaan(this.eka, 0, 0);
-        } else if (ae.getSource() == this.toka) {
-            this.toka.setText(kortit.annaOikeaPuoli(0, 1));
-            kasvataKierrosta();
-            talletaMuuttujaan(this.toka, 0, 1);
-        } else if (ae.getSource() == this.kolmas) {
-            this.kolmas.setText(kortit.annaOikeaPuoli(1, 0));
-            kasvataKierrosta();
-            talletaMuuttujaan(this.kolmas, 1, 0);
-        } else if (ae.getSource() == this.neljas) {
-            this.neljas.setText(kortit.annaOikeaPuoli(1, 1));
-            kasvataKierrosta();
-            talletaMuuttujaan(this.neljas, 1, 1);
-        }
-    }
-    
-    // NÄMÄ PITÄÄ SAADA TÄÄLTÄ POIS!
-    public int kierrosTarkistin() {
-        return this.kierros;
-    }
-    
-    public void kasvataKierrosta() {
-        this.kierros++; 
-    }
-    
-    public void nollaaKierros() {
-        this.kierros = 0;
     }
     
     public boolean onkoPari() {
-        if (muuttuja1.equals(muuttuja2)) {
+        if (this.lahde1.equals(this.lahde2)) {
             return true;
-        } return false;
-    }
-    
-    public void talletaMuuttujaan(JButton nappi, int y, int x) {
-        if (muuttuja1.equals("0")) {
-            this.muuttuja1 = kortit.annaOikeaPuoli(y, x);
-            System.out.println("muuttuja1="+muuttuja1);
-            this.lahde1 = nappi;
-            x1 = x;
-            y1 = y;
-            
-        } else
-        if (muuttuja1.equals("0") == false && muuttuja2.equals("0") == true ) {
-            this.muuttuja2 = kortit.annaOikeaPuoli(y, x);
-            System.out.println("muuttuja2="+muuttuja2);
-            this.lahde2 = nappi;
-            x2 = x;
-            y2 = y;
- 
-        } 
+        } return false;  
+        
     }
     
 }

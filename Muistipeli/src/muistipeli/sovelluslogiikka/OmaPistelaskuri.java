@@ -3,6 +3,7 @@ package muistipeli.sovelluslogiikka;
 
 /**
  * Ohjelmoinnin harjoitustyö, syksy 2013
+ * Pistelaskuria ei tällä hetkellä vielä kytketty sovellukseen. Työn alla...
  * 
  * @author Anu Nikkanen
  */
@@ -36,12 +37,12 @@ public class OmaPistelaskuri implements Pistelaskuri {
     } 
 
     @Override
-    public int annaKierrokset() { // väliaikainen soluzione
+    public int annaKierrokset() { // väliaikainen ratkaisu
         return this.lkm;
     }
 
     @Override
-    public void kasvataKierrosta() { // väliaikainen soluzione
+    public void kasvataKierrosta() { // väliaikainen ratkaisu
         this.lkm++;
     }
     

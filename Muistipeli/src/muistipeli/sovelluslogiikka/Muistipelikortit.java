@@ -5,17 +5,12 @@ import java.util.Random;
 
 /**
  * Ohjelmoinnin jatkokurssi, syksy 2013
- * VIELÄ HYYYYVIN ALKUVAIHEESSA, LÄHINNÄ OMAA TESTAILUA...
+ * SOVELLUKSEN LOGIIKKAA UUSITTU, TÄMÄN LUOKAN TARPEELLISUUS MIETINNÄSSÄ.
  * 
  * @author anunikkanen
  */
 public class Muistipelikortit {
 
-    // TÄSTÄ PITÄISI TULLA SEN VERRAN YLEISKÄYTTÖINEN, ETTÄ PALAUTTAA UUDEN, 
-    // MINKÄ TAHANSA KOKOISEN PELILAUDAN!! (JA SIIS VALMIINA MUUTA KUIN
-    // NUMEROITA)...
-    // MIETI VIELÄ, ONKO MATRIISISTA TÄSSÄ YLEENSÄ MITÄÄN HYÖTYÄ! OLISIKO
-    // ESIM. HASHMAPPI HYVÄ RATKAISU (avain -> JButton.getSource()?
     
     private String[][] matriisi;
     private String[][] tyhja;

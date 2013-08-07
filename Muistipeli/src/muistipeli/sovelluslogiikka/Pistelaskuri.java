@@ -3,7 +3,7 @@ package muistipeli.sovelluslogiikka;
 
 /**
  * Ohjelmoinnin harjoitustyö, syksy 2013
- * VIELÄ HYYYYVIN ALKUVAIHEESSA, LÄHINNÄ OMAA TESTAILUA...
+ * TÄTÄ PITÄÄ MUOKATA UUTEEN SOVELLUSLOGIIKKAAN SOVELTUVAKSI.
  * 
  * @author Anu Nikkanen
  */

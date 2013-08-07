@@ -3,29 +3,33 @@ package muistipeli.kayttoliittyma;
 
 /**
  * Ohjelmoinnin harjoitustyö, syksy 2013
- * VIELÄ HYYYYVIN ALKUVAIHEESSA, LÄHINNÄ OMAA TESTAILUA...
+ * KESKEN VIELÄ. EI PISTEIDEN LASKUA YMS. TOIMINNASSA + FIKSATTU KENTÄN
+ * KOKO YMS.
+ * 
  * 
  * @author Anu Nikkanen
  */
 
-
-// importtaa tarvittavat luokat, esim. import sovelluslogiikka.jotakin;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.*;
-import muistipeli.sovelluslogiikka.Muistipelikortit;
+import javax.swing.border.LineBorder;
 
 
 public class Kayttoliittyma implements Runnable {
     private JFrame frame;
-    private JButton yksi, kaksi, kolme, nelja; 
-    private Muistipelikortit kortit;
+    private ArrayList<String> ikonit = new ArrayList<String>();
+    private HashMap<JButton, String> napit = new HashMap<JButton, String>();
+    //private Muistipelikortit kortit;
     
    
-    public Kayttoliittyma(Muistipelikortit pelilauta) {
-        this.kortit = pelilauta;
+    public Kayttoliittyma() {
+        
     }
 
     @Override
@@ -36,40 +40,57 @@ public class Kayttoliittyma implements Runnable {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
    
         luoKomponentit(frame.getContentPane());
+        frame.setResizable(false);
         
         frame.pack();
         frame.setVisible(true);
     }
     
     private void luoKomponentit(Container container) {
-        container.setLayout(new GridLayout(3,1));
+         container.setLayout(new GridLayout(3,1));
         
-        JLabel ylateksti = new JLabel("Ylätekstikenttä");
+      
+        JLabel ylateksti = new JLabel("<html><p>Tervetuloa pelaamaan hienoa muistipeliäni!<br />"
+                + "Voit kääntää kerrallaan kaksi korttia - yritä löytää parit.<br />"
+                + "Kun olet löytänyt kaikki parit, peli päättyy.</p></html>"); // tämä johonkin muualle "hae ohjeet"
+        ylateksti.setOpaque(true);
+        ylateksti.setBackground(Color.yellow);
+
         container.add(ylateksti, BorderLayout.NORTH);
         
+        this.ikonit.add("src/kuvat/ikoni1.gif"); // nämä pitää generoida toisella tavalla (luetaan tiedostosta/listasta,
+        this.ikonit.add("src/kuvat/ikoni2.gif"); // jossa kuvat ovat, seuraava kuvatiedoston nimi), kortit ovat listassa
+        this.ikonit.add("src/kuvat/ikoni2.gif"); // sekoitettuna
+        this.ikonit.add("src/kuvat/ikoni3.gif"); // ja tietysti kuvat ja koko käyttöliittymä pitää vielä laittaa kuntoon
+        this.ikonit.add("src/kuvat/ikoni3.gif");
+        this.ikonit.add("src/kuvat/ikoni4.gif");
+        this.ikonit.add("src/kuvat/ikoni4.gif");
         container.add(luoNappaimet());
         
         JLabel alateksti = new JLabel("Alatekstikenttä");
         container.add(alateksti);
-        
-        KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(this.kortit, this.yksi, this.kaksi, this.kolme, this.nelja);
-        this.yksi.addActionListener(kuuntelija); // copypastea?
-        this.kaksi.addActionListener(kuuntelija);
-        this.kolme.addActionListener(kuuntelija);
-        this.nelja.addActionListener(kuuntelija);  
-        
-        // huom! lisää se 'set resizable false'-juttu!!
+       
+        KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(napit, alateksti);
+        for (JButton nappi : napit.keySet()) {
+            nappi.addActionListener(kuuntelija);
+        }
     }
     
+    
     private JPanel luoNappaimet() {
-        JPanel panel = new JPanel(new GridLayout(3,3)); // pystyisikö tämän panelin välittämään; ei jokaista erikseen?
-       
-        panel.add(this.yksi = new JButton(kortit.annaKaantopuoli(0, 1))); // copypastea?
-        panel.add(this.kaksi = new JButton(kortit.annaKaantopuoli(0, 1)));
-        panel.add(this.kolme = new JButton(kortit.annaKaantopuoli(1, 0)));
-        panel.add(this.nelja = new JButton(kortit.annaKaantopuoli(1, 1)));
+        JPanel panel = new JPanel(new GridLayout(2,3));
+        panel.setMaximumSize(new Dimension(200, 200));
         
-        return panel;
+        for (int i=0; i<6; i++) {
+            ImageIcon kuva = new ImageIcon(ikonit.get(0)); // lisää virheiden tarkistus + tarkista logiikka
+            JButton b = new JButton(kuva);                  // kun kuvien lähde oikea
+            ImageIcon kuva2 = new ImageIcon(ikonit.get(i+1)); 
+            b.setDisabledIcon(kuva2);
+            b.setPreferredSize(new Dimension(2,2));
+            b.setBorder(new LineBorder(Color.BLACK, 2));
+            this.napit.put(b, ikonit.get(i+1));
+            panel.add(b); 
+        } return panel;
     }
     
     public JFrame getFrame() {
