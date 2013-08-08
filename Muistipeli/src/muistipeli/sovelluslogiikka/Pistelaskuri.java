@@ -3,49 +3,61 @@ package muistipeli.sovelluslogiikka;
 
 /**
  * Ohjelmoinnin harjoitustyö, syksy 2013
- * Pistelaskuria ei tällä hetkellä vielä kytketty sovellukseen. Työn alla...
  * 
  * @author Anu Nikkanen
+ * 
+ * Pistelaskuri laskee pelaajan muistipelissä saavuttamat pisteet. Mitä
+ * vähemmän arvauksia, sitä enemmän pisteitä pelaaja saa.
+ * 
+ * PISTELASKURIA EI OLE TÄLLÄ HETKELLÄ VIELÄ KYTKETTY KÄYTTÖLIITTYMÄÄN/
+ * VARSINAISEEN SOVELLUSLOGIIKKAAN.
+ * 
  */
-public class OmaPistelaskuri implements Pistelaskuri {
+public class Pistelaskuri implements Laskuri {
     
     private int arvo;
-    private int lkm; // jos jää tälleen, niin tee tälle oma luokka -> ei copypastea!
+    private int arvaustenLkm;
     
-    public OmaPistelaskuri() {
+    public Pistelaskuri() {
         this.arvo = 0;
-        this.lkm = 0;
+        this.arvaustenLkm = 0;
     }
     
     @Override
     public int annaArvo() {
         return this.arvo;
     }
-
-    @Override
-    public void kasvataArvoa() {
-        this.arvo++; // tämä pitää muuttaa vielä myöhemmin oikein toimivaksi,
-        // eli niin, että on myös toinen laskuri (pisteidenLaskija), johon tämä viittaa.. eli mitä
-        // vähemmän on arvauksia, niin sitä paremmat pisteet
+    
+    public int annaArvaustenLkm() {
+        return this.arvaustenLkm;
     }
-    // lisätäänkö rajapintaan??
-    public int pisteidenLaskija(int arvo) {
-        // tämän laskurin on tarkoitus pitää kirjaa arvauksista. tähän joku sellainen
-        // logiikka, että pelaaja saa eri määrän pisteitä esim. riippuen siitä,
-        // kuinka monta kierrosta on mennyt 
-        return 0;
+    
+    public void kasvataArvaustenLkmYhdella() {
+        this.arvaustenLkm++;
+    }
+    
+    @Override
+    public void kasvataArvoaYhdella() {
+        this.arvo++; 
+    }
+    
+    public void lisaaBonus() {
+        if (arvaustenLkm < 3) { // tämä ei tule olemaan sidottu tähän lukuun, vaan riippuu korttien määrästä.
+            kasvataArvoa(10);
+        } 
     } 
-
+    
     @Override
-    public int annaKierrokset() { // väliaikainen ratkaisu
-        return this.lkm;
+    public void kasvataArvoa(int luku) {
+        this.arvo=+luku;
     }
-
+    
     @Override
-    public void kasvataKierrosta() { // väliaikainen ratkaisu
-        this.lkm++;
+    public String toString() {
+        return "laskurin arvo on nyt " + this.arvo + " ja arvausten lkm " + this.arvaustenLkm;
     }
     
     
+
 }
 

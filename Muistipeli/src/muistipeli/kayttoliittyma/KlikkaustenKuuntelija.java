@@ -3,11 +3,13 @@ package muistipeli.kayttoliittyma;
 
 /**
  * Ohjelmoinnin harjoitustyö, syksy 2013
- * KESKEN VIELÄ. EI PISTEIDEN LASKUA YMS. TOIMINNASSA + FIKSATTU KENTÄN
- * KOKO YMS.
- * 
  * 
  * @author Anu Nikkanen
+ * 
+ * KlikkaustenKuuntelija toteuttaa kuhunkin muistipelikorttiin sidottavat
+ * toiminnot. Tällä hetkellä actionPerformed-metodi on liian mammuttimainen;
+ * vastuuta tulee siirtää esim. Pelilauta-oliolle sovelluslogiikka-pakettiin.
+ * 
  */
 
 import java.awt.event.ActionEvent;
@@ -15,8 +17,6 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-//import muistipeli.sovelluslogiikka.Muistipelikortit;
-//import muistipeli.sovelluslogiikka.OmaPistelaskuri;
 
         
 public class KlikkaustenKuuntelija implements ActionListener {
@@ -27,13 +27,15 @@ public class KlikkaustenKuuntelija implements ActionListener {
     private String lahde1;
     private String lahde2;
     private JLabel alateksti;
+    private final String TYHJA;
           
     
-    public KlikkaustenKuuntelija(HashMap<JButton, String> yksi, JLabel alapalkki) { // tarvitseeko tälle välittää pistelaskuri?
-        this.napit = yksi;
+    public KlikkaustenKuuntelija(HashMap<JButton, String> map, JLabel alapalkki) { 
+        this.napit = map;
         this.kierros = 0;
-        this.lahde1 = " "; // vakioksi tjms?
-        this.lahde2 = " ";        
+        this.TYHJA = " ";
+        this.lahde1 = this.TYHJA; 
+        this.lahde2 = this.TYHJA;        
         this.alateksti = alapalkki;
         //this.laskin = laskuri;
     }
@@ -41,22 +43,17 @@ public class KlikkaustenKuuntelija implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         
-        System.out.println("kierros: "+kierros);
-        
-        
-        if (kierros == 2 && onkoPari() == false) { // saisiko tätä vielä järkeistettyä ja vähennettyä copypastea?
+        if (kierros == 2 && onkoPari() == false) { // copypastea pitää vielä vähentää
             ekaNappi.setEnabled(true);
             tokaNappi.setEnabled(true);
             kierros = 0;
-            this.lahde1 = " ";
-            this.lahde2 = " ";
+            this.lahde1 = this.TYHJA;
+            this.lahde2 = this.TYHJA;
         }
         
         if (kierros == 2 && onkoPari() == true) {
-            //n.setEnabled(false);
-            //m.setEnabled(false);
-            this.lahde1 = " ";
-            this.lahde2 = " ";
+            this.lahde1 = this.TYHJA;
+            this.lahde2 = this.TYHJA;
             kierros = 0;
         } 
         
@@ -66,9 +63,9 @@ public class KlikkaustenKuuntelija implements ActionListener {
                     tallenna(this.napit.get(jButton), jButton);
                     kierros++;  
                 }
-          
         } 
-        // muualle? esim. laskuri-luokkaan tarkistusmetodi?
+        
+        // Tällaiset pätkät ainakin muualle!
         int laskuri = 0;
         for (JButton j : napit.keySet()) {
             if (j.isEnabled() == false ) {
@@ -80,18 +77,16 @@ public class KlikkaustenKuuntelija implements ActionListener {
             
         }
         
-        
-     
     }
     
-    // NÄMÄ PITÄÄ SAADA TÄÄLTÄ POIS!?
+    // NÄMÄ PITÄÄ SIIVOTA TÄÄLTÄ POIS 
     public void tallenna(String tiedosto, JButton nappi) {
-        if (this.lahde1.equals(" ")) {
+        if (this.lahde1.equals(this.TYHJA)) {
             this.lahde1 = tiedosto;
             this.ekaNappi = nappi;
         } else {
             this.lahde2 = tiedosto;
-            this.ekaNappi = nappi;     
+            this.tokaNappi = nappi;     
         }
         
     }

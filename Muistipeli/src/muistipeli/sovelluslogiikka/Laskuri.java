@@ -3,13 +3,18 @@ package muistipeli.sovelluslogiikka;
 
 /**
  * Ohjelmoinnin harjoitustyö, syksy 2013
- * TÄTÄ PITÄÄ MUOKATA UUTEEN SOVELLUSLOGIIKKAAN SOVELTUVAKSI.
  * 
  * @author Anu Nikkanen
+ * 
+ * Laskuri on rajapinta, joka antaa 'ohjeet' Laskuri-olion käyttämiselle.
+ * Ajatus on, että rajapintaa voi hyödyntää Pistelaskurin lisäksi myös esim.
+ * Kierroslaskuri (luokkaa ei vielä olemassa).
+ * 
  */
-public interface Pistelaskuri {
+
+public interface Laskuri {
     public int annaArvo();
-    public void kasvataArvoa();   
-    public int annaKierrokset();
-    public void kasvataKierrosta();
+    public void kasvataArvoaYhdella(); 
+    public void kasvataArvoa(int luku);
+   
 }

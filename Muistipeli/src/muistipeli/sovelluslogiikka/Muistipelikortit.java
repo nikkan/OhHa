@@ -1,72 +1,80 @@
 
 package muistipeli.sovelluslogiikka;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Ohjelmoinnin jatkokurssi, syksy 2013
- * SOVELLUKSEN LOGIIKKAA UUSITTU, TÄMÄN LUOKAN TARPEELLISUUS MIETINNÄSSÄ.
  * 
- * @author anunikkanen
+ * @author Anu Nikkanen
+ * 
+ * Luokka palauttaa parametrina saadun koon mukaisen sekoitetun pakan muistikortteja,
+ * ts. ikoneita JButtoneille. Ttällä hetkellä pakan koko on fiksattu 2x3, 
+ * mutta tarkoitus on, että korteille luetaan kuvat tiedostosta tai taulukosta
+ * sen mukaan, minkä koon käyttäjä valitsee pelille. 
+ * 
  */
-public class Muistipelikortit {
 
+public class Muistipelikortit {
     
-    private String[][] matriisi;
-    private String[][] tyhja;
+    private ArrayList<String> ikonit;
+    private String kaantopuoli;
     
     public Muistipelikortit() {
-        this.matriisi = new String[][] {{"1", "1"}, {"2", "2"}};  
-        this.tyhja = new String[2][2];
-        
-        for (int t=0; t<tyhja.length; ++t) {
-            for (int s=0; s<tyhja.length; ++s) {
-                tyhja[t][s] = " ";
-            }
+        this.ikonit = new ArrayList<String>();
+        this.ikonit.add("src/muistipeli/kuvat/ikoni2.gif"); 
+        this.ikonit.add("src/muistipeli/kuvat/ikoni2.gif"); 
+        this.ikonit.add("src/muistipeli/kuvat/ikoni3.gif"); 
+        this.ikonit.add("src/muistipeli/kuvat/ikoni3.gif");
+        this.ikonit.add("src/muistipeli/kuvat/ikoni4.gif");
+        this.ikonit.add("src/muistipeli/kuvat/ikoni4.gif");  
+        this.kaantopuoli = "src/muistipeli/kuvat/ikoni1.gif";
+    }
+    
+    public Muistipelikortit(int koko) {
+        if (tarkistaKoko(koko) == true) {
+            this.ikonit = new ArrayList<String>(); // luetaan vastaavasta listasta tai tiedostosta
+            for (int i = 0; i < koko; ++i ) {
+                this.ikonit.add("placeholder"); // placeholderin tilalle tiedostosta lukeminen/taulukko 
+            }   
         }
     }
     
-    public String[][] annaPelilauta() {
-        return this.matriisi;
-    }
-
-    public String annaKaantopuoli(int x, int y) {
-        return this.tyhja[x][y];
+    public boolean tarkistaKoko(int annettuKoko) {
+        if (annettuKoko == 3) { // muuta vastaamaan todellisia arvoja, kun pelikentän koko vaihdettavissa
+            return true;
+        } return false; 
     }
     
-    public String annaOikeaPuoli(int x, int y) {
-        return this.matriisi[x][y];
-    }
-   
-    public void vaihdaArvoa(int x, int y) {
-        this.tyhja[x][y] = this.matriisi[x][y];
+    public ArrayList<String> annaIkonit() {
+        sekoitaKortit();
+        this.ikonit.add(this.kaantopuoli);
+        return this.ikonit;
     }
     
-    
-    /* KORTTIEN SEKOITTAMINEN:
-        
-        int[] taulukkoA = {1,1,2,2,3,3,4,4,5,5,6,6};
-        // luo Random-objektin:
+    public void sekoitaKortit() {
+        // tirasta tuttu sekoitusalgoritmi sovellettuna
         Random satunnaisluku = new Random();
-        
-        
-        for (int i=0; i<12; ++i) {
-            System.out.println(taulukkoA[i]);
+      
+        for (int j=ikonit.size()-1; j>=1; j--) {
+            int s = satunnaisluku.nextInt(ikonit.size()); 
+            String apu = ikonit.get(j);
+            ikonit.set(j, ikonit.get(s));
+            ikonit.set(s, apu);
         }
-        
-        // randomize
-        for (int j=taulukkoA.length-1; j>=1; j--) {
-            int s = satunnaisluku.nextInt(taulukkoA.length-1+1) + 0; // järkeistä tämä!
-            System.out.println("nextint: "+s);
-            int apu = taulukkoA[j];
-            taulukkoA[j] = taulukkoA[s];
-            taulukkoA[s] = apu;
+     
+    }
+    
+    @Override
+    public String toString() {
+        String lista = "";
+        for (String ikoni : ikonit) {
+            lista += ikoni+",";
         }
-        // testiprintti..
-        System.out.println("taulukko nyt: ");
-        for (int t=0; t<12; ++t) {
-            System.out.println(taulukkoA[t]);
-        }
-         
-    }*/
+        return lista;
+    }
+    
+    
+  
 }
