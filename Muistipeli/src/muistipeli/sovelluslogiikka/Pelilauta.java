@@ -2,7 +2,7 @@
 package muistipeli.sovelluslogiikka;
 
 /**
- * Ohjelmoinnin harjoitustyö, syksy 2013
+ * Ohjelmoinnin harjoitustyo, loppukesa 2013
  * 
  * @author Anu Nikkanen
  * 
@@ -22,6 +22,7 @@ public class Pelilauta {
         this.ohjeet = "<html><p>Tervetuloa pelaamaan hienoa muistipeliäni!<br />"
                 + "Voit kääntää kerrallaan kaksi korttia - yritä löytää parit.<br />"
                 + "Kun olet löytänyt kaikki parit, peli päättyy.</p></html>";
+        
         
     }
     

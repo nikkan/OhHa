@@ -2,7 +2,7 @@
 package muistipeli.kayttoliittyma;
 
 /**
- * Ohjelmoinnin harjoitustyö, syksy 2013
+ * Ohjelmoinnin harjoitustyo, loppukesa 2013
  * 
  * @author Anu Nikkanen
  * 
@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import muistipeli.sovelluslogiikka.Pistelaskuri;
 
         
 public class KlikkaustenKuuntelija implements ActionListener {
@@ -28,16 +29,17 @@ public class KlikkaustenKuuntelija implements ActionListener {
     private String lahde2;
     private JLabel alateksti;
     private final String TYHJA;
+    private Pistelaskuri laskin;
           
     
-    public KlikkaustenKuuntelija(HashMap<JButton, String> map, JLabel alapalkki) { 
+    public KlikkaustenKuuntelija(HashMap<JButton, String> map, JLabel alapalkki, Pistelaskuri laskuri) { 
         this.napit = map;
         this.kierros = 0;
         this.TYHJA = " ";
         this.lahde1 = this.TYHJA; 
         this.lahde2 = this.TYHJA;        
         this.alateksti = alapalkki;
-        //this.laskin = laskuri;
+        this.laskin = laskuri;
     }
     
     @Override
@@ -55,13 +57,15 @@ public class KlikkaustenKuuntelija implements ActionListener {
             this.lahde1 = this.TYHJA;
             this.lahde2 = this.TYHJA;
             kierros = 0;
+         
         } 
         
         for (JButton jButton : napit.keySet()) {
                 if (ae.getSource() == jButton ) {
                     jButton.setEnabled(false);
                     tallenna(this.napit.get(jButton), jButton);
-                    kierros++;  
+                    kierros++;
+                    laskin.kasvataArvaustenLkmYhdella();      
                 }
         } 
         
@@ -73,7 +77,7 @@ public class KlikkaustenKuuntelija implements ActionListener {
             }
             
         } if (laskuri == 6) {
-            this.alateksti.setText("Wohoo!");
+            this.alateksti.setText("Wohoo! Omat pisteesi: "+laskin.annaArvo());
             
         }
         
@@ -93,6 +97,7 @@ public class KlikkaustenKuuntelija implements ActionListener {
     
     public boolean onkoPari() {
         if (this.lahde1.equals(this.lahde2)) {
+            laskin.kasvataArvoa(10);
             return true;
         } return false;  
         

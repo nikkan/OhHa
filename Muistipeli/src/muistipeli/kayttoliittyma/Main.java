@@ -5,7 +5,7 @@ import javax.swing.SwingUtilities;
 import muistipeli.sovelluslogiikka.Muistipelikortit;
 
 /**
- * Ohjelmoinnin harjoitustyö, syksy 2013
+ * Ohjelmoinnin harjoitustyo, loppukesa 2013
  * 
  * @author Anu Nikkanen
  * 
@@ -15,7 +15,8 @@ import muistipeli.sovelluslogiikka.Muistipelikortit;
         
 public class Main {
     public static void main(String[] args) {
-        Muistipelikortit kortit = new Muistipelikortit();    
+        Muistipelikortit kortit = new Muistipelikortit(3); 
+        //System.out.println(kortit.toString());
         Kayttoliittyma kali = new Kayttoliittyma(kortit);
         SwingUtilities.invokeLater(kali);
     

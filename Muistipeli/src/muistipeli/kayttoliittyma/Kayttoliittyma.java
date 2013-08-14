@@ -2,7 +2,7 @@
 package muistipeli.kayttoliittyma;
 
 /**
- * Ohjelmoinnin harjoitustyö, syksy 2013
+ * Ohjelmoinnin harjoitustyo, loppukesa 2013
  * 
  * @author Anu Nikkanen
  * 
@@ -21,6 +21,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import muistipeli.sovelluslogiikka.Muistipelikortit;
 import muistipeli.sovelluslogiikka.Pelilauta;
+import muistipeli.sovelluslogiikka.Pistelaskuri;
 
 
 public class Kayttoliittyma implements Runnable {
@@ -29,10 +30,12 @@ public class Kayttoliittyma implements Runnable {
     private HashMap<JButton, String> napit = new HashMap<JButton, String>();
     private Muistipelikortit kortit;
     private Pelilauta peli;
+    private Pistelaskuri laskuri;
     
     public Kayttoliittyma(Muistipelikortit pelikortit) {
         this.kortit = pelikortit;
         this.peli = new Pelilauta();
+      
     }
 
     @Override
@@ -60,8 +63,9 @@ public class Kayttoliittyma implements Runnable {
         
         JLabel alateksti = new JLabel(" ");
         container.add(alateksti);
+        this.laskuri = new Pistelaskuri(alateksti);
        
-        KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(napit, alateksti);
+        KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(napit, alateksti, laskuri);
         for (JButton nappi : napit.keySet()) {
             nappi.addActionListener(kuuntelija);
         }

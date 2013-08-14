@@ -1,0 +1,3 @@
+src/muistipeli/kuvat/ikoni2.gif
+src/muistipeli/kuvat/ikoni3.gif
+src/muistipeli/kuvat/ikoni4.gif

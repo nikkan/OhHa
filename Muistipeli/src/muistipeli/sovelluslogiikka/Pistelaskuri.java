@@ -1,8 +1,10 @@
 
 package muistipeli.sovelluslogiikka;
 
+import javax.swing.JLabel;
+
 /**
- * Ohjelmoinnin harjoitustyö, syksy 2013
+ * Ohjelmoinnin harjoitustyo, loppukesa 2013
  * 
  * @author Anu Nikkanen
  * 
@@ -17,11 +19,21 @@ public class Pistelaskuri implements Laskuri {
     
     private int arvo;
     private int arvaustenLkm;
+    private JLabel pistekentta;
     
     public Pistelaskuri() {
         this.arvo = 0;
         this.arvaustenLkm = 0;
+   
     }
+    
+    public Pistelaskuri(JLabel alapalkki) {
+        this.arvo = 0;
+        this.arvaustenLkm = 0;
+        this.pistekentta = alapalkki;
+        this.pistekentta.setText("pisteesi: "+this.arvo);
+    }
+    
     
     @Override
     public int annaArvo() {
@@ -50,6 +62,7 @@ public class Pistelaskuri implements Laskuri {
     @Override
     public void kasvataArvoa(int luku) {
         this.arvo=+luku;
+        this.pistekentta.setText("pisteesi: "+this.arvo);
     }
     
     @Override
