@@ -6,7 +6,7 @@ package muistipeli.kayttoliittyma;
  * 
  * @author Anu Nikkanen
  * 
- * Kayttoliittyma-luokassa luodaan käyttöliittymäkomponentit.
+ * Kayttoliittyma-luokassa luodaan käyttöliittymä muistipelille.
  * 
  */
 
@@ -21,7 +21,6 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import muistipeli.sovelluslogiikka.Muistipelikortit;
 import muistipeli.sovelluslogiikka.Pelilauta;
-import muistipeli.sovelluslogiikka.Pistelaskuri;
 
 
 public class Kayttoliittyma implements Runnable {
@@ -30,12 +29,10 @@ public class Kayttoliittyma implements Runnable {
     private HashMap<JButton, String> napit = new HashMap<JButton, String>();
     private Muistipelikortit kortit;
     private Pelilauta peli;
-    private Pistelaskuri laskuri;
     
     public Kayttoliittyma(Muistipelikortit pelikortit) {
         this.kortit = pelikortit;
         this.peli = new Pelilauta();
-      
     }
 
     @Override
@@ -49,6 +46,7 @@ public class Kayttoliittyma implements Runnable {
         frame.setVisible(true);
     }
     
+    // Metodi luo käyttöliittymäkomponentit muistipelille.
     private void luoKomponentit(Container container) {
         container.setLayout(new GridLayout(3,1));
         
@@ -63,9 +61,8 @@ public class Kayttoliittyma implements Runnable {
         
         JLabel alateksti = new JLabel(" ");
         container.add(alateksti);
-        this.laskuri = new Pistelaskuri(alateksti);
        
-        KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(napit, alateksti, laskuri);
+        KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(napit, alateksti);
         for (JButton nappi : napit.keySet()) {
             nappi.addActionListener(kuuntelija);
         }
@@ -73,7 +70,7 @@ public class Kayttoliittyma implements Runnable {
     
     // luoNappaimet() -metodi luo muistipelikortteina toimivat JButtonit.
     // Tarkoitus on siirtää osa nyt metodin sisällä olevasta koodista omaan luokkaan tai
-    // pelilauta -luokkaan. Metodista puuttuu myös vielä esim. virheiden tarkistus.
+    // pelilauta -luokkaan. Metodista puuttuu vielä virheiden tarkistus.
     private JPanel luoNappaimet() {
         JPanel panel = new JPanel(new GridLayout(2,3));
         panel.setMaximumSize(new Dimension(200, 200));

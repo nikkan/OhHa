@@ -26,6 +26,7 @@ public class Pelilauta {
         
     }
     
+    // Metodi palauttaa musitipelin ohjeet merkkijonona.
     public String annaOhjeet() {
         return this.ohjeet;
     }

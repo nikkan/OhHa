@@ -13,8 +13,11 @@ package muistipeli.sovelluslogiikka;
  */
 
 public interface Laskuri {
-    public int annaArvo();
-    public void kasvataArvoaYhdella(); 
+    public void asetaArvo(int luku);
+    public void nollaa();
+    public int haeArvo();
+    public void kasvataArvoa(); 
     public void kasvataArvoa(int luku);
+    
    
 }

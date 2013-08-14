@@ -12,9 +12,10 @@ import java.util.Scanner;
  * @author Anu Nikkanen
  * 
  * Luokka palauttaa parametrina saadun koon mukaisen sekoitetun pakan muistikortteja,
- * ts. ikoneita JButtoneille. Ttällä hetkellä pakan koko on fiksattu 2x3, 
- * mutta tarkoitus on, että korteille luetaan kuvat tiedostosta tai taulukosta
- * sen mukaan, minkä koon käyttäjä valitsee pelille. 
+ * ts. ikoneita JButtoneille. Tällä hetkellä pakan koko on fiksattu 2x3, mutta lisää
+ * valinnanvapautta on tulossa..
+ * 
+ * Tarkoitus on myös eriyttää tiedostonkäsittely vielä omaksi luokakseen.
  * 
  */
 
@@ -31,6 +32,8 @@ public class Muistipelikortit {
         this.tl = null;
     }
     
+    // Metodi hakee tiedostosta oikean kokoisen muistipelin korttien tiedot 
+    // ja tallentaa ne ArrayListiin.
     public Muistipelikortit(int koko) {
         if (tarkistaKoko(koko) == true) {
             this.ikonit = new ArrayList<String>(); 
@@ -51,21 +54,23 @@ public class Muistipelikortit {
             System.out.println("Pelikentän koko ei ole mahdollinen.");
         }
     }
-    
+    // Metodi tarkistaa, onko pyydetyn muistipelin koko validi.
     public static boolean tarkistaKoko(int annettuKoko) {
-        if (annettuKoko == 3 || annettuKoko == 4 || annettuKoko == 5) { // muuta vastaamaan todellisia arvoja, kun pelikentän koko vaihdettavissa
+        if (annettuKoko == 3 || annettuKoko == 4 || annettuKoko == 5) {
             return true;
         } return false; 
     }
     
+    // Metodi palauttaa listallisen ikoneita halutun kokoiseen muistipeliin.
     public ArrayList<String> annaIkonit() {
         sekoitaKortit();
         this.ikonit.add(this.kaantopuoli);
         return this.ikonit;
     }
     
+    // Tirasta tuttu sekoitusalgoritmi sekoittaa muistikorttipakan, jotta
+    // pelilauta on joka kerta erilainen.
     public void sekoitaKortit() {
-        // tirasta tuttu sekoitusalgoritmi sovellettuna
         Random satunnaisluku = new Random();
       
         for (int j=ikonit.size()-1; j>=1; j--) {
@@ -74,7 +79,6 @@ public class Muistipelikortit {
             ikonit.set(j, ikonit.get(s));
             ikonit.set(s, apu);
         }
-     
     }
     
     @Override
@@ -85,7 +89,6 @@ public class Muistipelikortit {
         }
         return lista;
     }
-    
     
   
 }

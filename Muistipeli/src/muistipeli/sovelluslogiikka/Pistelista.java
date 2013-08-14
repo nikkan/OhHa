@@ -13,6 +13,11 @@ import java.util.Scanner;
  * Ohjelmoinnin harjoitustyö, loppukesä 2013
  * 
  * @author Anu Nikkanen
+ * 
+ * Luokka tarjoaa palveluita pistelistojen tallentamiseen ja tulostamiseen. 
+ * 
+ * Tarkoitus on, että tiedostonkäsittely eriytetään vielä omaksi luokakseen.
+ * 
  */
 
 

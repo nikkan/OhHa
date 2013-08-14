@@ -41,13 +41,6 @@ public class PistelaskuriTest {
         int arvo = laskuri.annaArvo();
         assertEquals(arvo,0);
     }
-    
-    @Test
-    public void lisaaBonusToimiiOikein() {
-        laskuri.lisaaBonus();
-        assertEquals("laskurin arvo on nyt 10 ja arvausten lkm 0", laskuri.toString());
-    }
-    
-    
+
             
 }

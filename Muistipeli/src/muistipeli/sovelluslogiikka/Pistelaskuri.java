@@ -1,7 +1,6 @@
 
 package muistipeli.sovelluslogiikka;
 
-import javax.swing.JLabel;
 
 /**
  * Ohjelmoinnin harjoitustyo, loppukesa 2013
@@ -11,31 +10,17 @@ import javax.swing.JLabel;
  * Pistelaskuri laskee pelaajan muistipelissä saavuttamat pisteet. Mitä
  * vähemmän arvauksia, sitä enemmän pisteitä pelaaja saa.
  * 
- * PISTELASKURIA EI OLE TÄLLÄ HETKELLÄ VIELÄ KYTKETTY KÄYTTÖLIITTYMÄÄN/
- * VARSINAISEEN SOVELLUSLOGIIKKAAN.
- * 
  */
-public class Pistelaskuri implements Laskuri {
+public class Pistelaskuri {
     
     private int arvo;
     private int arvaustenLkm;
-    private JLabel pistekentta;
     
     public Pistelaskuri() {
         this.arvo = 0;
         this.arvaustenLkm = 0;
-   
     }
     
-    public Pistelaskuri(JLabel alapalkki) {
-        this.arvo = 0;
-        this.arvaustenLkm = 0;
-        this.pistekentta = alapalkki;
-        this.pistekentta.setText("pisteesi: "+this.arvo);
-    }
-    
-    
-    @Override
     public int annaArvo() {
         return this.arvo;
     }
@@ -48,21 +33,17 @@ public class Pistelaskuri implements Laskuri {
         this.arvaustenLkm++;
     }
     
-    @Override
+
     public void kasvataArvoaYhdella() {
         this.arvo++; 
     }
     
-    public void lisaaBonus() {
-        if (arvaustenLkm < 3) { // tämä ei tule olemaan sidottu tähän lukuun, vaan riippuu korttien määrästä.
-            kasvataArvoa(10);
-        } 
-    } 
-    
-    @Override
-    public void kasvataArvoa(int luku) {
-        this.arvo=+luku;
-        this.pistekentta.setText("pisteesi: "+this.arvo);
+    // Mikäli arvausten lkm on pienempi kuin 10, oikeasta parista annetaan
+    // pisteitä 10-arvausten lkm.
+    public void kasvataArvoa(int arvaukset) {
+        if (arvaukset<10) {
+            this.arvo=this.arvo+(10-arvaukset);
+        }
     }
     
     @Override
