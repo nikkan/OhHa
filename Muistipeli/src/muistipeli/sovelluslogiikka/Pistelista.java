@@ -30,8 +30,8 @@ public class Pistelista {
     public Pistelista(String t) { // pitäiskö 'juuri tämän muistipelin' asetukset tallentaa johonkin omaan luokkaansa tjms?
         this.tiedosto = new File(t);
         this.pistelista = new ArrayList<Pelaaja>();
-        this.kirjoittaja = null;
-        this.lukija = null; //?
+        this.kirjoittaja = null; 
+        this.lukija = null; 
     }
     
     // Metodi hakee pisteet tekstidokumentista ja siirtää ne listarakenteeseen.
@@ -47,14 +47,14 @@ public class Pistelista {
             String[] pisteet = rivi.split(":");
             String nimi = pisteet[0];
             String pistemaara = pisteet[1];
-            int lkm = Integer.parseInt(pistemaara); // exception?? --> tähn try-catchit vielä?
+            int lkm = Integer.parseInt(pistemaara); // exception?? --> tähän try-catchit vielä?
             this.lisaaPisteet(nimi, lkm);
         } lukija.close();
         return true;
     }
 
     // Metodi lisää pistelistaan uuden pistemäärän ja vastaavan pelaajan.
-    private void lisaaPisteet(String pelaajanNimi, int pelaajanPisteet) {
+    public void lisaaPisteet(String pelaajanNimi, int pelaajanPisteet) {
         this.pistelista.add(new Pelaaja(pelaajanNimi, pelaajanPisteet));
     }
     
@@ -71,21 +71,30 @@ public class Pistelista {
         }
      } 
     
-    // Metodi tulostaa kutsumishetkellä pistelistassa olevat "top 10"-pisteet
-    public void tulostaPisteet() {
+    // Metodi palauttaa kutsumishetkellä pistelistassa olevat "top 10"-pisteet
+    public String tulostaPisteet() {
         /*if (this.pistelista.size() > 1) {
             Collections.sort(this.pistelista);
         }*/
         if (this.pistelista.size() < 10) {
             for (Pelaaja pelaaja : this.pistelista) {
-                System.out.println(pelaaja.toString());
+                return pelaaja.toString();
             }
         } else {
             for (int p=0; p<10; ++p) {
-                System.out.println(this.pistelista.get(p).toString());
+                return this.pistelista.get(p).toString();
             }
-        }
+        } return ("ei pisteita");
         
+    }
+    
+    @Override
+    public String toString() {
+        String lista = "";
+        for (Pelaaja p : this.pistelista) {
+            lista += p.toString()+",";
+        }
+        return lista;
     }
     
     

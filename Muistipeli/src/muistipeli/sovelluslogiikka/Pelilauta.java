@@ -21,7 +21,8 @@ public class Pelilauta {
     public Pelilauta() {
         this.ohjeet = "<html><p>Tervetuloa pelaamaan hienoa muistipeliäni!<br />"
                 + "Voit kääntää kerrallaan kaksi korttia - yritä löytää parit.<br />"
-                + "Kun olet löytänyt kaikki parit, peli päättyy.</p></html>";
+                + "Mikäli et löydä paria, kortit kääntyvät nurin päin kun klikkaat seuraavaa korttia.<br />"
+                + "Kun olet löytänyt kaikki parit, peli päättyy ja näet loppupisteesi.</p></html>";
         
         
     }

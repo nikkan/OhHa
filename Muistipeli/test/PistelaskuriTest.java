@@ -21,25 +21,31 @@ public class PistelaskuriTest {
 
     @Test
     public void konstruktoriAsettaaLaskurinAlkutilaan() {
-        assertEquals("laskurin arvo on nyt 0 ja arvausten lkm 0", laskuri.toString());
+        assertEquals("laskurin arvo on nyt 0", laskuri.toString());
     }
     
     @Test 
     public void pistelaskuriKasvattaaYhdellaOikein() {
         laskuri.kasvataArvoaYhdella();
-        assertEquals("laskurin arvo on nyt 1 ja arvausten lkm 0", laskuri.toString());
+        assertEquals("laskurin arvo on nyt 1", laskuri.toString());
     }
     
     @Test
-    public void pistelaskuriKasvattaaLaskuriaAnnetuillaPisteilla() {
-        laskuri.kasvataArvoa(5);
-        assertEquals("laskurin arvo on nyt 5 ja arvausten lkm 0", laskuri.toString());
+    public void pistelaskuriKasvattaaLaskuriaAnnetunArvausLkmHuomioiden() {
+        laskuri.kasvataArvoa(6);
+        assertEquals("laskurin arvo on nyt 4", laskuri.toString());
     }
     
     @Test
-    public void annaArvoToimiiOikein() {
+    public void annaArvoHakeeOikeanArvon() {
         int arvo = laskuri.annaArvo();
-        assertEquals(arvo,0);
+        assertEquals(0,arvo);
+    }
+    
+    @Test
+    public void annaArvaustenLkmHakeeOikeanLkm() {
+        int arvaukset = laskuri.annaArvaustenLkm();
+        assertEquals(0, arvaukset);
     }
 
             

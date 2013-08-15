@@ -33,7 +33,6 @@ public class Pistelaskuri {
         this.arvaustenLkm++;
     }
     
-
     public void kasvataArvoaYhdella() {
         this.arvo++; 
     }
@@ -48,7 +47,7 @@ public class Pistelaskuri {
     
     @Override
     public String toString() {
-        return "laskurin arvo on nyt " + this.arvo + " ja arvausten lkm " + this.arvaustenLkm;
+        return "laskurin arvo on nyt " + this.arvo;
     }
     
     

@@ -54,8 +54,14 @@ public class Muistipelikortit {
             System.out.println("Pelikentän koko ei ole mahdollinen.");
         }
     }
+    
+    // Metodi lisää listaan uuden ikonin
+    public void lisaaIkoni(String ikoni) {
+        this.ikonit.add(ikoni);
+    }
+    
     // Metodi tarkistaa, onko pyydetyn muistipelin koko validi.
-    public static boolean tarkistaKoko(int annettuKoko) {
+    public boolean tarkistaKoko(int annettuKoko) {
         if (annettuKoko == 3 || annettuKoko == 4 || annettuKoko == 5) {
             return true;
         } return false; 
