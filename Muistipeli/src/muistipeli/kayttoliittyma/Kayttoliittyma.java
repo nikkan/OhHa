@@ -30,8 +30,8 @@ public class Kayttoliittyma implements Runnable {
     private Muistipelikortit kortit;
     private Pelilauta peli;
     
-    public Kayttoliittyma(Muistipelikortit pelikortit) {
-        this.kortit = pelikortit;
+    public Kayttoliittyma() {
+        this.kortit = new Muistipelikortit(3);
         this.peli = new Pelilauta();
     }
 

@@ -15,9 +15,9 @@ import muistipeli.sovelluslogiikka.Muistipelikortit;
         
 public class Main {
     public static void main(String[] args) {
-        Muistipelikortit kortit = new Muistipelikortit(3); 
+        //Muistipelikortit kortit = new Muistipelikortit(3); 
         //System.out.println(kortit.toString());
-        Kayttoliittyma kali = new Kayttoliittyma(kortit);
+        Kayttoliittyma kali = new Kayttoliittyma();
         SwingUtilities.invokeLater(kali);
     
     }
