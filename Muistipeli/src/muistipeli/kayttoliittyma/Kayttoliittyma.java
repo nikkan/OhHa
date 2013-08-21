@@ -8,10 +8,11 @@ package muistipeli.kayttoliittyma;
  * 
  * Kayttoliittyma-luokassa luodaan käyttöliittymä muistipelille.
  * 
- * KÄLI ON TÄLLÄ HETKELLÄ 'MOCKUP', EIKÄ OLE KYTKETTY PELILOGIIKKAAN.
+ * 
  * 
  */
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -45,7 +46,7 @@ public class Kayttoliittyma implements Runnable {
     public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame(" Muistipeli ");
-        //frame.setPreferredSize(new Dimension(400, 400));   
+        frame.setPreferredSize(new Dimension(400, 400));   
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         luoKomponentit(frame.getContentPane());
         frame.setResizable(false);
@@ -55,6 +56,7 @@ public class Kayttoliittyma implements Runnable {
     
     // Metodi luo käyttöliittymäkomponentit muistipelille.
     private void luoKomponentit(Container container) {
+        /*UUTTA GUITA TULOSSA!
         JPanel totalGUI = new JPanel();
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -196,9 +198,9 @@ public class Kayttoliittyma implements Runnable {
         totalGUI.add(mainPanel);
         totalGUI.setOpaque(true);
         container.add(totalGUI);
+        */
         
-        
-        /*container.setLayout(new GridLayout(3,1));
+        container.setLayout(new GridLayout(3,1));
         
         JMenuBar menu = new JMenuBar();
       
@@ -234,7 +236,7 @@ public class Kayttoliittyma implements Runnable {
         KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(napit, alateksti);
         for (JButton nappi : napit.keySet()) {
             nappi.addActionListener(kuuntelija);
-        }*/
+        }
     }
     
     // luoNappaimet() -metodi luo muistipelikortteina toimivat JButtonit.
