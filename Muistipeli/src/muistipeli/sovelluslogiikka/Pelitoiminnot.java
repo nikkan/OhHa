@@ -105,6 +105,8 @@ public class Pelitoiminnot {
     private void asetaPisteet() {
         if (this.parit == 3) {
             this.pistekentta.setText("WOHOO! Loppupisteesi: "+laskin.annaArvo() );
+            //this.pistekentta.
+           
         } else {
             this.pistekentta.setText("pisteesi: "+laskin.annaArvo() );
         }
