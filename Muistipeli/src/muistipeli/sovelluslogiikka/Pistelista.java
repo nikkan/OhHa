@@ -29,7 +29,7 @@ public class Pistelista {
     
     public Pistelista(String t) { 
         this.tiedosto = new File(t);
-        this.pistelista = null;
+        this.pistelista = new ArrayList<Pelaaja>();
         this.kirjoittaja = null; 
         this.lukija = null; 
     }
@@ -55,9 +55,7 @@ public class Pistelista {
 
     /*Metodi lisää pistelistaan uuden pistemäärän ja vastaavan pelaajan.*/
     public void lisaaPisteet(String pelaajanNimi, int pelaajanPisteet) {
-        if (this.pistelista == null) {
-            this.pistelista = new ArrayList<Pelaaja>();
-        }
+        
         this.pistelista.add(new Pelaaja(pelaajanNimi, pelaajanPisteet));
     }
    
@@ -65,7 +63,7 @@ public class Pistelista {
     
     /*Metodi tallentaa pistelistan tekstitiedostoon. Vanhat pistetiedot yliajetaan.*/
     public void tallennaPisteet() {
-        if (this.pistelista == null) { 
+        if (this.pistelista.isEmpty()) { 
             haePisteet(); 
         }
         this.kirjoittaja = null; // onko tämä tässä tarpeellinen?
@@ -85,13 +83,15 @@ public class Pistelista {
     
     /*Metodi palauttaa kutsumishetkellä pistelistassa olevan parhaan pistemäärän+*/
     public String tulostaHighscore() {
-        if (this.pistelista == null) {haePisteet();}
-        String palautus = "";
-        if (this.pistelista.size() >= 1) {
+       haePisteet(); 
+       String palautus = " ";
+            if (this.pistelista.size() >= 1) {
             Collections.sort(this.pistelista);
-            palautus+=this.pistelista.get(0);
-            return palautus;
-        } else return "0";
+                palautus+=this.pistelista.get(0);
+            } else {
+                palautus = "0";
+       } return palautus;
+            
     }
     
     /* Metodi tulostaa top5-pisteet */
@@ -106,7 +106,7 @@ public class Pistelista {
                 palauta+=pistelista.get(p).toString2()+"\n";
            
         } 
-    } return palauta+"";
+    } return palauta;
     }
     
     
