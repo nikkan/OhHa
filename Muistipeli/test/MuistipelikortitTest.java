@@ -1,6 +1,5 @@
 
 import muistipeli.sovelluslogiikka.Muistipelikortit;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,27 +19,25 @@ public class MuistipelikortitTest {
     
     @Test
     public void toimiikoKonstruktoriValidillaArvollaOikein() {
-        this.kortit = new Muistipelikortit(3);
+        this.kortit = new Muistipelikortit(2);
         String vastaus = this.kortit.toString();
-        assertEquals("src/muistipeli/kuvat/ikoni2.gif,"
-                + "src/muistipeli/kuvat/ikoni2.gif,"
-                + "src/muistipeli/kuvat/ikoni3.gif,"
-                + "src/muistipeli/kuvat/ikoni3.gif,"
-                + "src/muistipeli/kuvat/ikoni4.gif,"
-                + "src/muistipeli/kuvat/ikoni4.gif,", vastaus);
+        assertEquals("src/muistipeli/kuvat/omppu.gif,"
+                + "src/muistipeli/kuvat/omppu.gif,"
+                + "src/muistipeli/kuvat/lasit.gif,"
+                + "src/muistipeli/kuvat/lasit.gif,", vastaus);
     }
     
     @Test
     public void huomaakoSyotteenKoonTarkistajaVirheellisenKoon() {
-        this.kortit = new Muistipelikortit(3);
-        boolean tarkista = this.kortit.tarkistaKoko(2);
+        this.kortit = new Muistipelikortit(2);
+        boolean tarkista = this.kortit.tarkistaKoko(3);
         assertEquals(false, tarkista);
     }
     
     @Test
     public void toimiikoSyotteenKoonTarkistajaOikeinValidillaArvolla() {
-        this.kortit = new Muistipelikortit(3);
-        boolean tarkista = this.kortit.tarkistaKoko(3);
+        this.kortit = new Muistipelikortit(2);
+        boolean tarkista = this.kortit.tarkistaKoko(2);
         assertEquals(true, tarkista);
     }
     

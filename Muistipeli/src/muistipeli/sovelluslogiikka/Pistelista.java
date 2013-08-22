@@ -16,8 +16,8 @@ import java.util.Scanner;
  * 
  * Luokka tarjoaa palveluita pistelistojen tallentamiseen ja tulostamiseen. 
  * 
- * Tarkoitus on, että tiedostonkäsittely eriytetään vielä omaksi luokakseen.
- * 
+ * Tällä hetkellä top5-pistelistan tulostaminen ei vielä ole käytössä.
+ *
  */
 
 
@@ -27,21 +27,21 @@ public class Pistelista {
     private Scanner lukija;
     private FileWriter kirjoittaja;
     
-    public Pistelista(String t) { // pitäiskö 'juuri tämän muistipelin' asetukset tallentaa johonkin omaan luokkaansa tjms?
+    public Pistelista(String t) { 
         this.tiedosto = new File(t);
-        this.pistelista = new ArrayList<Pelaaja>();
+        this.pistelista = null;
         this.kirjoittaja = null; 
         this.lukija = null; 
     }
     
-    // Metodi hakee pisteet tekstidokumentista ja siirtää ne listarakenteeseen.
+    /*Metodi hakee pisteet tekstidokumentista ja siirtää ne listarakenteeseen.*/
     public boolean haePisteet() {
         this.pistelista = new ArrayList<Pelaaja>();
         this.lukija = null;
         try {
             this.lukija = new Scanner(this.tiedosto);
         } catch (Exception poikkeus) {
-            System.out.println("Tiedostoa ei voitu lukea. Virhe: " + poikkeus.getMessage() ); // tämä pitänee ohjata GUI:hin?
+            System.out.println("Tiedostoa ei voitu lukea. Virhe: " + poikkeus.getMessage() ); 
         } while (lukija.hasNextLine()) {
             String rivi = lukija.nextLine();
             String[] pisteet = rivi.split(":");
@@ -53,13 +53,21 @@ public class Pistelista {
         return true;
     }
 
-    // Metodi lisää pistelistaan uuden pistemäärän ja vastaavan pelaajan.
+    /*Metodi lisää pistelistaan uuden pistemäärän ja vastaavan pelaajan.*/
     public void lisaaPisteet(String pelaajanNimi, int pelaajanPisteet) {
+        if (this.pistelista == null) {
+            this.pistelista = new ArrayList<Pelaaja>();
+        }
         this.pistelista.add(new Pelaaja(pelaajanNimi, pelaajanPisteet));
     }
+   
+   
     
-    // Metodi tallentaa pistelistan tekstitiedostoon. Vanhat pistetiedot yliajetaan.
+    /*Metodi tallentaa pistelistan tekstitiedostoon. Vanhat pistetiedot yliajetaan.*/
     public void tallennaPisteet() {
+        if (this.pistelista == null) { 
+            haePisteet(); 
+        }
         this.kirjoittaja = null; // onko tämä tässä tarpeellinen?
         try {
             this.kirjoittaja = new FileWriter(this.tiedosto);
@@ -71,31 +79,45 @@ public class Pistelista {
         }
      } 
     
-    // Metodi palauttaa kutsumishetkellä pistelistassa olevat "top 10"-pisteet
-    public String tulostaPisteet() {
-        /*if (this.pistelista.size() > 1) {
+    public List annaPistelista() {
+        return this.pistelista;
+    }
+    
+    /*Metodi palauttaa kutsumishetkellä pistelistassa olevan parhaan pistemäärän+*/
+    public String tulostaHighscore() {
+        if (this.pistelista == null) {haePisteet();}
+        String palautus = "";
+        if (this.pistelista.size() >= 1) {
             Collections.sort(this.pistelista);
-        }*/
-        if (this.pistelista.size() < 10) {
+            palautus+=this.pistelista.get(0);
+            return palautus;
+        } else return "0";
+    }
+    
+    /* Metodi tulostaa top5-pisteet */
+    public String tulostaPisteet() {
+       String palauta = "";
+        if (this.pistelista.size() < 5) {
             for (Pelaaja pelaaja : this.pistelista) {
-                return pelaaja.toString();
+                palauta+=pelaaja.toString2()+"\n";
             }
         } else {
-            for (int p=0; p<10; ++p) {
-                return this.pistelista.get(p).toString();
-            }
-        } return ("ei pisteita");
-        
+            for (int p=0; p<5; p++) {
+                palauta+=pistelista.get(p).toString2()+"\n";
+           
+        } 
+    } return palauta+"";
     }
+    
     
     @Override
     public String toString() {
         String lista = "";
         for (Pelaaja p : this.pistelista) {
-            lista += p.toString()+",";
+            lista += p.toString();
         }
         return lista;
     }
     
-    
 }
+

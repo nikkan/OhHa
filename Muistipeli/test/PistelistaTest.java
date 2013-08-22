@@ -26,7 +26,7 @@ public class PistelistaTest {
     public void pisteidenLisaysToimii() {
         this.lista.lisaaPisteet("Testi", 10);
         String vastaus = this.lista.toString();
-        assertEquals("Testi:10\n,", vastaus);
+        assertEquals("Testi:10\n", vastaus);
         
     }
     

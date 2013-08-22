@@ -33,8 +33,12 @@ public class Pelaaja implements Comparable<Pelaaja> {
         return this.getNimi() + ":" + this.getPisteet() + "\n";
     }
     
-    // Metodi tarjoaa välineet, joiden avulla pelaajat voidaan asettaa 
-    // järjestykseen ensisijaisesti pisteiden ja toissijaisesti nimen perusteella.
+    public String toString2() {
+        return this.getNimi() + ":" + this.getPisteet();
+    }
+    
+    /* Metodi tarjoaa välineet, joiden avulla pelaajat voidaan asettaa 
+    järjestykseen ensisijaisesti pisteiden ja toissijaisesti nimen perusteella.*/
     @Override
     public int compareTo(Pelaaja pelaaja) {
         if (this.pisteet == pelaaja.getPisteet() ) { 

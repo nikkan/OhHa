@@ -12,11 +12,9 @@ import java.util.Scanner;
  * @author Anu Nikkanen
  * 
  * Luokka palauttaa parametrina saadun koon mukaisen sekoitetun pakan muistikortteja,
- * ts. ikoneita JButtoneille. Tällä hetkellä pakan koko on fiksattu 2x3, mutta lisää
+ * ts. ikoneita JButtoneille. Tällä hetkellä pakan koko on fiksattu 2x2, mutta lisää
  * valinnanvapautta on tulossa..
- * 
- * Tarkoitus on myös eriyttää tiedostonkäsittely vielä omaksi luokakseen.
- * 
+ *
  */
 
 public class Muistipelikortit {
@@ -28,12 +26,11 @@ public class Muistipelikortit {
     
     public Muistipelikortit() {
         this.ikonit = new ArrayList<String>();
-        this.kaantopuoli = "src/muistipeli/kuvat/ikoni1.gif";
         this.tl = null;
     }
     
-    // Metodi hakee tiedostosta oikean kokoisen muistipelin korttien tiedot 
-    // ja tallentaa ne ArrayListiin.
+    /* Luokan konstruktori hakee tiedostosta oikean kokoisen muistipelin korttien tiedot 
+    /*ja tallentaa ne ArrayListiin.*/
     public Muistipelikortit(int koko) {
         if (tarkistaKoko(koko) == true) {
             this.ikonit = new ArrayList<String>(); 
@@ -49,33 +46,37 @@ public class Muistipelikortit {
                 this.ikonit.add(rivi);
             }  
             this.tl.close();
-            this.kaantopuoli = "src/muistipeli/kuvat/ikoni1.gif";
+            this.kaantopuoli = "src/muistipeli/kuvat/viikset.gif";
         } else {
             System.out.println("Pelikentän koko ei ole mahdollinen.");
         }
     }
     
-    // Metodi lisää listaan uuden ikonin
+    /* Metodi lisää listaan uuden ikonin*/
     public void lisaaIkoni(String ikoni) {
         this.ikonit.add(ikoni);
     }
     
-    // Metodi tarkistaa, onko pyydetyn muistipelin koko validi.
+    public String getKaantopuoli() {
+        return this.kaantopuoli;
+    }
+    
+    /*Metodi tarkistaa, onko pyydetyn muistipelin koko validi.*/
     public boolean tarkistaKoko(int annettuKoko) {
-        if (annettuKoko == 3 || annettuKoko == 4 || annettuKoko == 5) {
+        if (annettuKoko == 2 || annettuKoko == 4 || annettuKoko == 6) {
             return true;
         } return false; 
     }
     
-    // Metodi palauttaa listallisen ikoneita halutun kokoiseen muistipeliin.
+    /* Metodi palauttaa listallisen ikoneita halutun kokoiseen muistipeliin.*/
     public ArrayList<String> annaIkonit() {
         sekoitaKortit();
-        this.ikonit.add(this.kaantopuoli);
+        lisaaIkoni(this.kaantopuoli);
         return this.ikonit;
     }
     
-    // Tirasta tuttu sekoitusalgoritmi sekoittaa muistikorttipakan, jotta
-    // pelilauta on joka kerta erilainen.
+    /*Tirasta tuttu sekoitusalgoritmi sekoittaa muistikorttipakan, jotta
+    /*pelilauta on joka kerta erilainen.*/
     public void sekoitaKortit() {
         Random satunnaisluku = new Random();
       

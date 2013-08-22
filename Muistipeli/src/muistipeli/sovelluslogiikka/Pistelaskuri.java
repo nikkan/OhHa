@@ -37,8 +37,10 @@ public class Pistelaskuri {
         this.arvo++; 
     }
     
-    // Mikäli arvausten lkm on pienempi kuin 10, oikeasta parista annetaan
-    // pisteitä 10-arvausten lkm.
+    /* Metodi kasvattaa laskurin arvoa arvausten määrän huomioon ottaen.
+     * Mikäli arvausten lkm on pienempi kuin 10, 
+     * oikeasta parista annetaan
+    /* pisteitä (10-arvausten) lkm.*/
     public void kasvataArvoa(int arvaukset) {
         if (arvaukset<10) {
             this.arvo=this.arvo+(10-arvaukset);

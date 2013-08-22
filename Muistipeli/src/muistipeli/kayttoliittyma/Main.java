@@ -3,6 +3,7 @@ package muistipeli.kayttoliittyma;
 
 import javax.swing.SwingUtilities;
 import muistipeli.sovelluslogiikka.Muistipelikortit;
+import muistipeli.sovelluslogiikka.Pistelista;
 
 /**
  * Ohjelmoinnin harjoitustyo, loppukesa 2013
@@ -15,10 +16,24 @@ import muistipeli.sovelluslogiikka.Muistipelikortit;
         
 public class Main {
     public static void main(String[] args) {
-        //Muistipelikortit kortit = new Muistipelikortit(3); 
-        //System.out.println(kortit.toString());
+        //Muistipelikortit kortit = new Muistipelikortit(2); 
+        //System.out.println(kortit.getKaantopuoli());
+        //System.out.println(kortit.annaIkonit().toString());
         Kayttoliittyma kali = new Kayttoliittyma();
         SwingUtilities.invokeLater(kali);
+        //Pistelista l = new Pistelista("src/muistipeli/testaus.txt");
+        //l.tallennaPisteet();
+        //l.lisaaPisteet("testi", 10);
+        //l.lisaaPisteet("testi2", 5);
+        //System.out.println(l.tulostaHighscore());
+        //l.tallennaPisteet();
+       
+        //l.haePisteet();
+        //System.out.println(l.toString());
+        //System.out.println(l.tulostaPisteet());
+        //*/
+        
+        
     
     }
 }

@@ -1,0 +1,2 @@
+src/muistipeli/kuvat/omppu.gif
+src/muistipeli/kuvat/lasit.gif
