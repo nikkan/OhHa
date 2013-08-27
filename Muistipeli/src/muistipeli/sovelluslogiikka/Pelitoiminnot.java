@@ -41,6 +41,7 @@ public class Pelitoiminnot {
         this.kaannetaan = false;
         this.pp = pp;
         this.pk = pk;
+        this.parit = 0;
     }
     
     /* Metodi suorittaa muistipelin pelikierroksen */
@@ -101,11 +102,11 @@ public class Pelitoiminnot {
     
     /*Metodi tulostaa pisteet käyttöliittymän alapalkkiin.*/
     public void asetaPisteet() {
-        if (this.parit == 2) {
-            this.pp.getPisteesikentta().setText("pisteesi: "+laskin.annaArvo() );
-            this.pp.getTallennaNappi().setEnabled(true);
+        if (this.parit == this.pk.getKoko()) {
+            this.pp.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
+            this.pp.getTallennaNappi().setVisible(true);
         } else {
-            this.pp.getPisteesikentta().setText("pisteesi: "+laskin.annaArvo() );
+            this.pp.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
         }
     }
     
@@ -122,6 +123,19 @@ public class Pelitoiminnot {
             this.tokaNappi.setEnabled(true);
             this.kaannetaan = false;
         } 
+    }
+    
+    public void nollaaKaikki() {
+        this.kierros = 0;
+        this.laskin = new Pistelaskuri();
+        this.lahde1 = this.TYHJA;
+        this.lahde2 = this.TYHJA;
+        this.arvaukset = 0;
+        this.kaannetaan = false;
+        this.pp.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+0+"</html>");
+        this.parit = 0;
+     
+        
     }
 
 }

@@ -31,18 +31,15 @@ public class LuoHighscorepalkki {
         
         this.lista = lista;
         
-        this.highscorepalkki = new JPanel(new GridLayout(2,1));
+        this.highscorepalkki = new JPanel();
         this.highscorepalkki.setOpaque(true);
-        this.highscorepalkki.setBackground(Color.pink);
-        
-        this.highscoreotsikko = new JLabel("TOP SCORE");
-        this.highscorepalkki.add(this.highscoreotsikko);
-        
-        this.highscore = new JLabel(this.lista.tulostaHighscore());
+        this.highscorepalkki.setBackground(Color.PINK);
+        this.lista.haePisteet();
+        this.highscore = new JLabel();
+        this.highscore.setText(this.lista.tulostaPisteet());
+     
         this.highscorepalkki.add(this.highscore);
-        
-        this.highscore2 = new JLabel("");
-        this.highscorepalkki.add(this.highscore2);
+      
         
         // GridBagConstraints
         GridBagConstraints c = new GridBagConstraints();

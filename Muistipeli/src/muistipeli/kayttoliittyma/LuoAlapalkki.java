@@ -13,6 +13,7 @@ package muistipeli.kayttoliittyma;
  * 
  */
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
@@ -26,12 +27,13 @@ public class LuoAlapalkki {
     public LuoAlapalkki(JPanel mainPanel) {
         
         alapalkki = new JPanel();
+        alapalkki.setBackground(Color.black);
         uusipeli1 = new JButton("Uusi peli 2x2");
-        uusipeli1.setEnabled(false);
+        uusipeli1.setEnabled(true);
         uusipeli2 = new JButton("Uusi peli 4x4");
-        uusipeli2.setEnabled(false);
+        uusipeli2.setEnabled(true);
         uusipeli3 = new JButton("Uusi peli 8x8");
-        uusipeli3.setEnabled(false);
+        uusipeli3.setEnabled(true);
         
         alapalkki.add(uusipeli1);
         alapalkki.add(uusipeli2);
@@ -48,6 +50,18 @@ public class LuoAlapalkki {
         c.insets = new Insets(2,2,2,2);
         mainPanel.add(alapalkki, c);
         
+    }
+    
+    public JButton get2x2() {
+        return this.uusipeli1;
+    }
+    
+    public JButton get4x4() {
+        return this.uusipeli2;
+    }
+    
+    public JButton get6x6() {
+        return this.uusipeli3;
     }
     
     

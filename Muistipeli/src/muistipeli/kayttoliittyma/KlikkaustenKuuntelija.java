@@ -13,6 +13,7 @@ package muistipeli.kayttoliittyma;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JPanel;
 import muistipeli.sovelluslogiikka.Pelitoiminnot;
 import muistipeli.sovelluslogiikka.Pistelista;
 
@@ -22,13 +23,19 @@ public class KlikkaustenKuuntelija implements ActionListener {
     private Pistelista pisteet;
     private LuoPistepalkki pp;
     private LuoHighscorepalkki hp;
+    private LuoAlapalkki ap;
+    private JPanel mp;
+    private LuoPelikentta pk;
 
 
-    public KlikkaustenKuuntelija(LuoPistepalkki pp, LuoHighscorepalkki hp, LuoPelikentta pk, Pistelista p) {  
-        this.pt = new Pelitoiminnot(pk, pp);
+    public KlikkaustenKuuntelija(Pelitoiminnot pt, LuoAlapalkki ap, LuoPistepalkki pp, LuoHighscorepalkki hp, LuoPelikentta pk, Pistelista p) {  
+        this.pt = pt;
         this.pisteet = p;
         this.hp = hp;
         this.pp = pp;
+        this.ap = ap;
+        this.mp = mp;
+        this.pk = pk;
     }
     
     /* Metodi suorittaa kuhunkin JButtoniin liittyvät toiminnot */
@@ -38,22 +45,27 @@ public class KlikkaustenKuuntelija implements ActionListener {
         
         if (ae.getSource() == pp.getTallennaNappi()) {
           
-            pp.getNimim().setEnabled(true);
-            pp.getAnnaNimim().setEnabled(true);
-            pp.getOkNappi().setEnabled(true);
+            pp.getNimim().setVisible(true);
+            pp.getAnnaNimim().setVisible(true);
+            pp.getOkNappi().setVisible(true);
         }
         
         if (ae.getSource() == pp.getOkNappi() ) {
+                this.pisteet.haePisteet();
                 this.pisteet.lisaaPisteet(this.pp.getNimim().getText(), pt.finalScore());
-                this.pp.getNimim().setEnabled(false);
-                this.pp.getTallennaNappi().setEnabled(false);
-                this.pp.getOkNappi().setEnabled(false);
-                this.pp.getNimim().setText(" ");
+                this.pp.getNimim().setVisible(false);
+                this.pp.getTallennaNappi().setVisible(false);
+                this.pp.getOkNappi().setVisible(false);
+                this.pp.getNimim().setVisible(false);
+                this.pp.getNimim().setText("");
+                this.pp.getAnnaNimim().setVisible(false);
                 this.pisteet.tallennaPisteet();
                 this.hp.getHighscorekentta().setVisible(true);
-                this.hp.getHighscorekentta().setText("<html>"+this.pisteet.tulostaHighscore()+"</html>");
+                this.hp.getHighscorekentta().setText(this.pisteet.tulostaPisteet());
                 
         }
+        
+        
         
         
     }   

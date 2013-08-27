@@ -12,6 +12,7 @@ package muistipeli.kayttoliittyma;
  */
 
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import muistipeli.sovelluslogiikka.Muistipelikortit;
 
@@ -28,6 +30,7 @@ import muistipeli.sovelluslogiikka.Muistipelikortit;
 public class LuoPelikentta {
     
     private JPanel pelikentta;
+    private JPanel korttipohja;
     private Muistipelikortit kortit;
     private ArrayList<String> ikonit;
     private HashMap<JButton, String> korttilista;
@@ -42,13 +45,15 @@ public class LuoPelikentta {
         this.korttilista = new HashMap<JButton, String>();
         this.gbc = new GridBagConstraints();
         this.paneli = paneli;
-        
-        pelikentta = new JPanel(new GridLayout(2,2));
-        
-        luoKortit(pelikentta);
+        this.pelikentta = new JPanel(new GridLayout(1,1));
+  
+       
+        //luoKortit(pelikentta);
         pelikentta.setMaximumSize(new Dimension(400, 400));
         pelikentta.setMinimumSize(new Dimension(400, 400));
         pelikentta.setPreferredSize(new Dimension(400, 400));
+        pelikentta.setBackground(Color.WHITE);
+        
   
         // GridBagConstraints
         gbc.gridx = 0;
@@ -57,6 +62,10 @@ public class LuoPelikentta {
         gbc.gridwidth = 1;
         gbc.fill = GridBagConstraints.NONE;
         gbc.insets = new Insets(2,2,2,2);
+        
+        this.korttipohja = new JPanel(new GridLayout(this.koko,this.koko));
+        luoKortit(korttipohja);
+        this.pelikentta.add(korttipohja);
         
         this.paneli.add(pelikentta, gbc);
     
@@ -68,22 +77,53 @@ public class LuoPelikentta {
         return this.korttilista;
     }
     
+    public JPanel getPelikentta() {
+        return this.pelikentta;
+    }
+    
     /* Metodi palauttaa ArrayList:ssä korttien kuvapuolten ImageIconit */
     public Muistipelikortit getMuistipelikortit() {
         return this.kortit;
+    }
+    
+    public JPanel getKorttipohja() {
+        return this.korttipohja;
+    }
+    
+    public int getKoko() {
+        return this.koko;
+    }
+    
+    public JPanel getUusiPeli(int uusiKoko) {
+        this.koko = uusiKoko;
+        this.kortit = new Muistipelikortit(this.koko);
+        this.ikonit = kortit.annaIkonit();
+        this.korttilista = new HashMap<JButton, String>();
+       
+        this.korttipohja = new JPanel(new GridLayout(this.koko,this.koko));
+        luoKortit(korttipohja);
+        //this.pelikentta.add(testi);
+        
+       return korttipohja;
+        
+        
     }
     
    
     /* luoKortit() -metodi luo muistipelikortteina toimivat JButtonit.*/
     private JPanel luoKortit(JPanel paneeli) {
         
-        for (int i=0; i<this.koko*2; i++) { 
-            ImageIcon kuva = new ImageIcon(ikonit.get(this.koko*2)); 
-            JButton b = new JButton(kuva);                  
+        for (int i=0; i<this.koko*this.koko; i++) { 
+            ImageIcon kuva = new ImageIcon(ikonit.get(this.koko*this.koko)); 
+            JButton b = new JButton(kuva);         
+            b.setFocusPainted(false);
             ImageIcon kuva2 = new ImageIcon(ikonit.get(i)); 
             b.setDisabledIcon(kuva2);
-            b.setPreferredSize(new Dimension(2,2));
-            b.setBorder(new LineBorder(Color.BLACK, 2));
+            b.setHorizontalAlignment(SwingConstants.CENTER);
+            b.setVerticalAlignment(SwingConstants.CENTER);
+           // b.setPreferredSize(new Dimension(2,2));
+            b.setBorder(new LineBorder(Color.BLACK, 1));
+            //b.setMargin(new Insets(0, 0, 0, 0));
             this.korttilista.put(b, ikonit.get(i));
             paneeli.add(b); 
         } return paneeli;

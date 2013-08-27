@@ -46,7 +46,7 @@ public class Muistipelikortit {
                 this.ikonit.add(rivi);
             }  
             this.tl.close();
-            this.kaantopuoli = "src/muistipeli/kuvat/viikset.gif";
+            this.kaantopuoli = "src/muistipeli/kuvat/nurjapuoli.gif";
         } else {
             System.out.println("Pelikentän koko ei ole mahdollinen.");
         }

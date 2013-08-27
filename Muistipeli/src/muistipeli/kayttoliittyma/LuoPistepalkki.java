@@ -37,23 +37,24 @@ public class LuoPistepalkki {
         score.setOpaque(true);
         score.setBackground(Color.pink);
         
-        pisteesi = new JLabel("Pisteesi: 0");
+        pisteesi = new JLabel();
+        pisteesi.setText("<html>"+" # "+"<strong>Pisteesi: </strong>"+" "+0+"</html>");
         score.add(pisteesi);
         
         tallennaPisteet = new JButton("Tallenna pisteet");
-        tallennaPisteet.setEnabled(false);
+        tallennaPisteet.setVisible(false);
         score.add(tallennaPisteet);
         
         annaNimim = new JLabel("Anna nimimerkkisi");
-        annaNimim.setEnabled(false);
+        annaNimim.setVisible(false);
         score.add(annaNimim);
         
         nimim = new JTextField();
-        nimim.setEnabled(false);
+        nimim.setVisible(false);
         score.add(nimim);
         
         ok = new JButton("OK");
-        ok.setEnabled(false);
+        ok.setVisible(false);
         score.add(ok);
         
         // GridBagConstraints // 

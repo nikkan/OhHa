@@ -26,12 +26,14 @@ public class Pistelista {
     private File tiedosto;
     private Scanner lukija;
     private FileWriter kirjoittaja;
+    private String otsikko;
     
     public Pistelista(String t) { 
         this.tiedosto = new File(t);
         this.pistelista = new ArrayList<Pelaaja>();
         this.kirjoittaja = null; 
         this.lukija = null; 
+        this.otsikko = "TOP 10 PISTEET";
     }
     
     /*Metodi hakee pisteet tekstidokumentista ja siirtää ne listarakenteeseen.*/
@@ -84,29 +86,33 @@ public class Pistelista {
     /*Metodi palauttaa kutsumishetkellä pistelistassa olevan parhaan pistemäärän+*/
     public String tulostaHighscore() {
        haePisteet(); 
-       String palautus = " ";
+       String palautus = "<html>";
             if (this.pistelista.size() >= 1) {
             Collections.sort(this.pistelista);
-                palautus+=this.pistelista.get(0);
+                palautus+=this.pistelista.get(0)+"<br>";
             } else {
                 palautus = "0";
-       } return palautus;
+       } return palautus+"</html>";
             
     }
     
-    /* Metodi tulostaa top5-pisteet */
+    /* Metodi tulostaa top10-pisteet */
     public String tulostaPisteet() {
-       String palauta = "";
-        if (this.pistelista.size() < 5) {
+       int laskuri = 1;
+       String palauta = "<html><strong><br>TOP 10 PISTEET</strong></br><br>";
+       Collections.sort(this.pistelista);
+        if (this.pistelista.size() < 10) {
             for (Pelaaja pelaaja : this.pistelista) {
-                palauta+=pelaaja.toString2()+"\n";
+                palauta=palauta+laskuri+". "+pelaaja.toString()+"<br>";
+                laskuri++;
             }
         } else {
-            for (int p=0; p<5; p++) {
-                palauta+=pistelista.get(p).toString2()+"\n";
+            for (int p=0; p<10; p++) {
+                palauta=palauta+laskuri+". "+pistelista.get(p).toString2()+"<br>";
+                laskuri++;
            
         } 
-    } return palauta;
+    } return palauta+"</hmtl>";
     }
     
     
