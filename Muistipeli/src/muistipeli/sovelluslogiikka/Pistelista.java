@@ -44,20 +44,27 @@ public class Pistelista {
             this.lukija = new Scanner(this.tiedosto);
         } catch (Exception poikkeus) {
             System.out.println("Tiedostoa ei voitu lukea. Virhe: " + poikkeus.getMessage() ); 
+            return false;
         } while (lukija.hasNextLine()) {
-            String rivi = lukija.nextLine();
-            String[] pisteet = rivi.split(":");
-            String nimi = pisteet[0];
-            String pistemaara = pisteet[1];
-            int lkm = Integer.parseInt(pistemaara); // exception?? --> tähän try-catchit vielä?
-            this.lisaaPisteet(nimi, lkm);
-        } lukija.close();
+            try {
+                String rivi = lukija.nextLine();
+                String[] pisteet = rivi.split(":");
+                String nimi = pisteet[0];
+                String pistemaara = pisteet[1];
+                int lkm = Integer.parseInt(pistemaara); // exception?? --> tähän try-catchit vielä?
+                this.lisaaPisteet(nimi, lkm);
+        } catch (Exception poikkeus) {
+                System.out.println("Virhe tiedoston lukemisessa: " + poikkeus.getMessage());
+                return false;
+        }
+            
+        
+    } lukija.close();
         return true;
     }
 
     /*Metodi lisää pistelistaan uuden pistemäärän ja vastaavan pelaajan.*/
     public void lisaaPisteet(String pelaajanNimi, int pelaajanPisteet) {
-        
         this.pistelista.add(new Pelaaja(pelaajanNimi, pelaajanPisteet));
     }
    
@@ -66,7 +73,9 @@ public class Pistelista {
     /*Metodi tallentaa pistelistan tekstitiedostoon. Vanhat pistetiedot yliajetaan.*/
     public void tallennaPisteet() {
         if (this.pistelista.isEmpty()) { 
+            if (this.haePisteet() == true) {
             haePisteet(); 
+        }
         }
         this.kirjoittaja = null; // onko tämä tässä tarpeellinen?
         try {
