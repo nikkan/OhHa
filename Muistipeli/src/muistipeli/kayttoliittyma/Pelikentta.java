@@ -24,25 +24,29 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import muistipeli.sovelluslogiikka.Kortti;
 import muistipeli.sovelluslogiikka.Muistipelikortit;
 
 
-public class LuoPelikentta {
+public class Pelikentta {
     
     private JPanel pelikentta;
     private JPanel korttipohja;
     private Muistipelikortit kortit;
     private ArrayList<String> ikonit;
     private HashMap<JButton, String> korttilista;
+    private ArrayList<Kortti> korttilista2; // TESTIITESTII!
     private int koko;
     private GridBagConstraints gbc;
     private JPanel paneli;
+    private Kortti kortti; // tESTIITESTII
     
-    public LuoPelikentta(int koko, JPanel paneli) {
+    public Pelikentta(int koko, JPanel paneli) {
         this.koko = koko;
         this.kortit = new Muistipelikortit(this.koko);
         this.ikonit = kortit.annaIkonit();
         this.korttilista = new HashMap<JButton, String>();
+        this.korttilista2 = new ArrayList<Kortti>();  // TESTIITESTIILISÄTTY!
         this.gbc = new GridBagConstraints();
         this.paneli = paneli;
         this.pelikentta = new JPanel(new GridLayout(1,1));
@@ -77,6 +81,10 @@ public class LuoPelikentta {
         return this.korttilista;
     }
     
+    public ArrayList<Kortti> getKorttilista2() {
+        return this.korttilista2;
+    }
+    
     public JPanel getPelikentta() {
         return this.pelikentta;
     }
@@ -104,7 +112,7 @@ public class LuoPelikentta {
         luoKortit(korttipohja);
         //this.pelikentta.add(testi);
         
-       return korttipohja;
+        return korttipohja;
         
         
     }
@@ -113,19 +121,54 @@ public class LuoPelikentta {
     /* luoKortit() -metodi luo muistipelikortteina toimivat JButtonit.*/
     private JPanel luoKortit(JPanel paneeli) {
         
-        for (int i=0; i<this.koko*this.koko; i++) { 
-            ImageIcon kuva = new ImageIcon(ikonit.get(this.koko*this.koko)); 
-            JButton b = new JButton(kuva);         
-            b.setFocusPainted(false);
-            ImageIcon kuva2 = new ImageIcon(ikonit.get(i)); 
-            b.setDisabledIcon(kuva2);
-            b.setHorizontalAlignment(SwingConstants.CENTER);
-            b.setVerticalAlignment(SwingConstants.CENTER);
-           // b.setPreferredSize(new Dimension(2,2));
-            b.setBorder(new LineBorder(Color.BLACK, 1));
-            //b.setMargin(new Insets(0, 0, 0, 0));
-            this.korttilista.put(b, ikonit.get(i));
-            paneeli.add(b); 
+        for (int i=0; i<this.koko*this.koko; i++) {
+            if (kortit.onkoKuvia() == true) {
+                ImageIcon kaantopuoli = new ImageIcon(ikonit.get(this.koko*this.koko));
+                ImageIcon kuvapuoli = new ImageIcon(ikonit.get(i));
+                Kortti k = new Kortti(kuvapuoli, kaantopuoli);
+                paneeli.add(k);
+                this.korttilista2.add(k);
+                
+            } else {
+                Kortti k = new Kortti(ikonit.get(i));
+                paneeli.add(k);
+                this.korttilista2.add(k);
+            }
+             
+        }
+            return this.paneli;
+        }
+        
+        /*for (int i=0; i<this.koko*this.koko; i++) { 
+            if (kortit.onkoKuvia() == true) {
+                ImageIcon kuva = new ImageIcon(ikonit.get(this.koko*this.koko)); 
+                JButton b = new JButton(kuva); 
+                ImageIcon kuva2 = new ImageIcon(ikonit.get(i)); 
+                b.setFocusPainted(false);
+                b.setDisabledIcon(kuva2);
+                b.setHorizontalAlignment(SwingConstants.CENTER);
+                b.setVerticalAlignment(SwingConstants.CENTER);
+                // b.setPreferredSize(new Dimension(2,2));
+                b.setBorder(new LineBorder(Color.BLACK, 1));
+                //b.setMargin(new Insets(0, 0, 0, 0));
+                this.korttilista.put(b, ikonit.get(i));
+                paneeli.add(b); 
+            } else {
+                JButton b = new JButton("");
+                //ImageIcon kuva2 = new ImageIcon(ikonit.get(i)); 
+                b.setFocusPainted(false);
+           
+                //b.setDisabledIcon(kuva2);
+                b.setHorizontalAlignment(SwingConstants.CENTER);
+                b.setVerticalAlignment(SwingConstants.CENTER);
+                // b.setPreferredSize(new Dimension(2,2));
+                b.setBorder(new LineBorder(Color.BLACK, 1));
+                //b.setMargin(new Insets(0, 0, 0, 0));
+                this.korttilista.put(b, ikonit.get(i));
+                paneeli.add(b); 
+            }
+      
+           
         } return paneeli;
-    }
+    }*/
 }

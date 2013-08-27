@@ -1,11 +1,8 @@
 
 package muistipeli.sovelluslogiikka;
 
-import java.awt.event.ActionEvent;
-import java.util.HashMap;
-import javax.swing.JButton;
-import muistipeli.kayttoliittyma.LuoPelikentta;
-import muistipeli.kayttoliittyma.LuoPistepalkki;
+import muistipeli.kayttoliittyma.Pelikentta;
+import muistipeli.kayttoliittyma.Pistepalkki;
 
 /**
  *
@@ -20,80 +17,73 @@ import muistipeli.kayttoliittyma.LuoPistepalkki;
  */
 
 public class Pelitoiminnot {
-    
-    private HashMap<JButton, String> kortit;
-    private JButton ekaNappi, tokaNappi;
-    private String lahde1, lahde2;
+   
     private int kierros, arvaukset, parit;
-    private final String TYHJA;
     private Pistelaskuri laskin;
     private boolean kaannetaan;
-    private LuoPistepalkki pp;
-    private LuoPelikentta pk;
+    private Pistepalkki pistepalkki;
+    private Pelikentta pelikentta;
+    private Kortti kortti1;
+    private Kortti kortti2;
     
-    public Pelitoiminnot(LuoPelikentta pk, LuoPistepalkki pp) {
-        this.kierros = 0;
+    public Pelitoiminnot(Pelikentta pelikentta, Pistepalkki pistepalkki) {
         this.laskin = new Pistelaskuri();
-        this.TYHJA = " ";
-        this.lahde1 = this.TYHJA;
-        this.lahde2 = this.TYHJA;
+        this.kierros = 0;
         this.arvaukset = 0;
-        this.kaannetaan = false;
-        this.pp = pp;
-        this.pk = pk;
         this.parit = 0;
+        this.kaannetaan = false;
+        this.pistepalkki = pistepalkki;
+        this.pelikentta = pelikentta;
+        this.kortti1 = null;
+        this.kortti2 = null;
     }
     
     /* Metodi suorittaa muistipelin pelikierroksen */
-    public void pelikierros(ActionEvent toiminto) {
-        for (JButton j : this.pk.getKorttilista().keySet()) {
-            if (toiminto.getSource() == j) {
-                this.kierros++;
-                kaannetaanEdelliset();
-                j.setEnabled(false);
-                tallenna(this.pk.getKorttilista().get(j), j);
-          
-                if (this.kierros == 2 && onkoPari() == false) {
-                    eiPari();
-                } else if (this.kierros == 2 && onkoPari() == true) {
-                    onPari();
-                }
-            } 
-        } asetaPisteet();
-    }
+    public void pelikierros(Kortti kortti) { 
+        this.kierros++;
+        if (kaannetaan == true) {
+            kaannetaanEdelliset();
+        }
+        kortti.kaannaOikeinPain();
+        tallenna(kortti);
+        
+        if (this.kierros == 2 && onkoPari() == false) {
+            eiPari();
+        } if (this.kierros == 2 && onkoPari() == true) {
+            onPari();
+        }
+        asetaPisteet();
+        
+    } 
     
     /* Metodi tallentaa kortin (ImageIconin tiedoston nimen ja JButtonin) toiseen kahdesta muuttujasta.*/
-    public void tallenna(String tiedosto, JButton nappi) {
-        if (this.lahde1.equals(this.TYHJA)) {
-            this.lahde1 = tiedosto;
-            this.ekaNappi = nappi;
+    public void tallenna(Kortti kortti) {
+        if (this.kortti1 == null) {
+            this.kortti1 = kortti;
         } else {
-            this.lahde2 = tiedosto;
-            this.tokaNappi = nappi;
+            this.kortti2 = kortti;
         }
     }
     
     /* Metodi vertaa, ovatko kaksi korttia (=niiden kuvapuolet) samoja.*/
     public boolean onkoPari() {
-        if (this.lahde1.equals(this.lahde2)) {
+        if (this.kortti1.getKuvapuoli().equals(this.kortti2.getKuvapuoli()) ) {
             return true;
-        }
-        return false;
+        } return false;
+        
     }
     
     /*Metodi suoritetaan, mikäli kaksi korttia eivät ole pareja.*/
     public void eiPari() {
         kierros = 0;
-        this.lahde1 = this.TYHJA;
-        this.lahde2 = this.TYHJA;
-        this.kaannetaan = true;
+        this.kaannetaan = true;   
         this.arvaukset++;
     }
     
-    /* Metodi suoritetaan, mikäli kaksi korttia ovat parit.*/
+    /* Metodi suoritetaan, mikäli kaksi korttia ovat parit.*/    
     public void onPari() {
-        this.lahde1 = this.TYHJA;
-        this.lahde2 = this.TYHJA;
+        this.kortti1 = null;
+        this.kortti1 = null;
         this.kierros = 0;
         laskin.kasvataArvoa(this.arvaukset);
         this.parit++;
@@ -102,11 +92,11 @@ public class Pelitoiminnot {
     
     /*Metodi tulostaa pisteet käyttöliittymän alapalkkiin.*/
     public void asetaPisteet() {
-        if (this.parit == this.pk.getKoko()) {
-            this.pp.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
-            this.pp.getTallennaNappi().setVisible(true);
+        if (this.parit == this.pelikentta.getKoko()) {
+            this.pistepalkki.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
+            this.pistepalkki.getTallennaNappi().setVisible(true);
         } else {
-            this.pp.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
+            this.pistepalkki.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
         }
     }
     
@@ -115,27 +105,24 @@ public class Pelitoiminnot {
         return this.laskin.annaArvo();
     }
     
-    /*Metodi kääntää edellisen kierroksen kortit, mikäli paria ei löytynyt,
-      kun uutta korttia klikataan.*/
+    /*Metodi kääntää edellisen kierroksen kortit, mikäli paria ei löytynyt*/
     public void kaannetaanEdelliset() {
-        if (this.kaannetaan == true) {
-            this.ekaNappi.setEnabled(true);
-            this.tokaNappi.setEnabled(true);
-            this.kaannetaan = false;
-        } 
+        this.kortti1.kaannaNurinPain();
+        this.kortti2.kaannaNurinPain();
+        this.kortti1 = null;
+        this.kortti2 = null;
+        this.kaannetaan = false;
+        
     }
     
     public void nollaaKaikki() {
         this.kierros = 0;
         this.laskin = new Pistelaskuri();
-        this.lahde1 = this.TYHJA;
-        this.lahde2 = this.TYHJA;
         this.arvaukset = 0;
         this.kaannetaan = false;
-        this.pp.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+0+"</html>");
+        this.pistepalkki.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+0+"</html>");
         this.parit = 0;
-     
-        
+        this.pistepalkki.getTallennaNappi().setVisible(false);
     }
 
 }

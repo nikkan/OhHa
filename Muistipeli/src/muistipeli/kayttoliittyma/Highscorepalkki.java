@@ -20,14 +20,14 @@ import javax.swing.JPanel;
 import muistipeli.sovelluslogiikka.Pistelista;
 
 
-public class LuoHighscorepalkki {
+public class Highscorepalkki {
     
     private JPanel highscorepalkki;
     private JLabel highscoreotsikko;
     private JLabel highscore, highscore2;
     private Pistelista lista;
     
-    public LuoHighscorepalkki(JPanel mainPanel, Pistelista lista) {
+    public Highscorepalkki(JPanel mainPanel, Pistelista lista) {
         
         this.lista = lista;
         

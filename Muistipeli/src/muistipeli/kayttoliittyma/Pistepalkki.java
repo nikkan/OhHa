@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-public class LuoPistepalkki {
+public class Pistepalkki {
     
     private JButton tallennaPisteet;
     private JButton ok;
@@ -31,7 +31,7 @@ public class LuoPistepalkki {
     private JLabel pisteesi;
     
     
-    public LuoPistepalkki(JPanel mainPanel) {
+    public Pistepalkki(JPanel mainPanel) {
        
         JPanel score = new JPanel(new GridLayout(6, 1));
         score.setOpaque(true);

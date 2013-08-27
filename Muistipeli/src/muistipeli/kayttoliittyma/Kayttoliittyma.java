@@ -2,30 +2,30 @@
 package muistipeli.kayttoliittyma;
 
 /**
- * Ohjelmoinnin harjoitustyo, loppukesa 2013
+ * Luo muistipelille graafisen käyttöliittymän.
  * 
  * @author Anu Nikkanen
- * 
- * Kayttoliittyma-luokassa luodaan muistipelin käyttöliittymäkomponentit.
- * 
  */
 
 import java.awt.Container;
 import java.awt.GridBagLayout;
 import javax.swing.*;
+import muistipeli.sovelluslogiikka.Kortti;
 import muistipeli.sovelluslogiikka.Pelitoiminnot;
 import muistipeli.sovelluslogiikka.Pistelista;
 
 
 public class Kayttoliittyma implements Runnable {
     private JFrame frame;
-    private Pistelista plista;
+    private Pistelista pistelista;
     private JPanel mainPanel;
     private Pelitoiminnot pelitoiminnot;
     
-    /* Luokan parametriton konstruktori */
+    /**
+     * Parametriton konstruktori, luo uuden pistelistaolion. 
+     */
     public Kayttoliittyma() {
-        this.plista = new Pistelista("src/muistipeli/pisteet.txt");
+        this.pistelista = new Pistelista("src/muistipeli/pisteet.txt");
     }
 
     @Override
@@ -39,45 +39,56 @@ public class Kayttoliittyma implements Runnable {
         frame.setVisible(true);
     }
     
-    /* Luodaan käyttöliittymäkomponentit GridBagLayoutia hyödyntäen */
+    /**
+     * Luo käyttöliittymäkomponentit GridBagLayoutia hyödyntäen.
+     *
+     * @param container JFramen 'sisältöpaneeli' (ContentPane), johon käyttö-
+     *                  liittymäkomponentit lisätään
+     */
     private void luoKomponentit(Container container) {
       
-        JPanel totalGUI = new JPanel();
+        JPanel graafinenKayttoliittyma = new JPanel();
         mainPanel = new JPanel(new GridBagLayout());
         
         // Luodaan mainPanelin sisälle tulevat palkit 
         LuoOtsikkopalkki otsikkopalkki = new LuoOtsikkopalkki(mainPanel);
         LuoOhjepalkki ohjepalkki = new LuoOhjepalkki(mainPanel);
-        LuoPistepalkki pistepalkki = new LuoPistepalkki(mainPanel);  
-        LuoHighscorepalkki highscorepalkki = new LuoHighscorepalkki(mainPanel, this.plista);
-        LuoPelikentta pelikentta = new LuoPelikentta(2, mainPanel);
-        LuoAlapalkki alapalkki = new LuoAlapalkki(mainPanel);
+        Pistepalkki pistepalkki = new Pistepalkki(mainPanel);  
+        Highscorepalkki highscorepalkki = new Highscorepalkki(mainPanel, this.pistelista);
+        Pelikentta pelikentta = new Pelikentta(2, mainPanel);
+        Alapalkki alapalkki = new Alapalkki(mainPanel);
         
         this.pelitoiminnot = new Pelitoiminnot(pelikentta, pistepalkki);
     
-        // Lisätään mainPanel kokonaisuuteen (totalGUI) ja totalGUI JFrameen 
-        totalGUI.add(mainPanel);
-        totalGUI.setOpaque(true);
-        container.add(totalGUI);
+        // Lisätään mainPanel graafiseenKayttoliittymaan ja graafinenKayttoliittyma
+        // containeriin
+        graafinenKayttoliittyma.add(mainPanel);
+        graafinenKayttoliittyma.setOpaque(true);
+        container.add(graafinenKayttoliittyma);
         
-        // Lisätään klikkaustenkuuntelija käyttöliittymäkomponenteille
-        KlikkaustenKuuntelija kuuntelija = new KlikkaustenKuuntelija(pelitoiminnot, alapalkki, pistepalkki, highscorepalkki, pelikentta, plista);
+        // Lisätään tapahtumankuuntelijat käyttöliittymäkomponenteille:
         
-        // Muistipelikortit:
-        for (JButton nappi : pelikentta.getKorttilista().keySet()) {
-            nappi.addActionListener(kuuntelija);
+        // Muistipelikortit
+        KorttienKuuntelija kuuntelija = new KorttienKuuntelija(pelitoiminnot, pelikentta);
+        
+        for (Kortti kortti : pelikentta.getKorttilista2()) {
+            kortti.addActionListener(kuuntelija);
         }
         
-        // Muut:
-        pistepalkki.getTallennaNappi().addActionListener(kuuntelija);
-        pistepalkki.getOkNappi().addActionListener(kuuntelija);
+        // Pistepalkin napit
+        PistepalkinKuuntelija ppk = new PistepalkinKuuntelija(pistepalkki, pistelista, highscorepalkki, pelitoiminnot);
+        
+        pistepalkki.getTallennaNappi().addActionListener(ppk);
+        pistepalkki.getOkNappi().addActionListener(ppk);
         
         
-        // Alapalkin napit:
+        // Alapalkin napit
         AlapalkinKuuntelija apk = new AlapalkinKuuntelija(pelitoiminnot, pelikentta, alapalkki, kuuntelija);
+        
         alapalkki.get2x2().addActionListener(apk);
         alapalkki.get4x4().addActionListener(apk);
         alapalkki.get6x6().addActionListener(apk);
+        alapalkki.getLopeta().addActionListener(apk);
        
     }
     
