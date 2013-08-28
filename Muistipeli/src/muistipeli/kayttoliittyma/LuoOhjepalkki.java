@@ -33,7 +33,7 @@ public class LuoOhjepalkki {
                 + "Mikäli et löydä paria, kortit kääntyvät <br />"
                 + "nurin päin kun klikkaat seuraavaa korttia.<br />"
                 + "Kun olet löytänyt kaikki parit, peli <br />"
-                + "päättyy ja näet loppupisteesi.</p></html>" );
+                + "päättyy ja voit tallentaa loppupisteesi.</p></html>" );
         ohjepalkki.add(ohjeet);
        
         // GridBagConstraints 
