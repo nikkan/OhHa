@@ -1,2 +1,2 @@
 src/muistipeli/kuvat/ankkuri.gif
-src/muistipeli/kuvat/lintuhakki1.gif
+src/muistipeli/kuvat/lintuhakki.gif

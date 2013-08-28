@@ -26,10 +26,7 @@ public class Muistipelikortit {
     private Scanner tl;
     File t;
     
-    /*public Muistipelikortit() {
-        this.ikonikuvat = new ArrayList<String>();
-        this.tl = null;
-    }*/
+
     
     /* Luokan konstruktori hakee tiedostosta oikean kokoisen muistipelin korttien tiedot 
     /*ja tallentaa ne ArrayListiin.*/
@@ -58,26 +55,7 @@ public class Muistipelikortit {
             }
         }
 
-       
-        /* if (tarkistaKoko(koko) == true) {
-            this.ikonit = new ArrayList<String>(); 
-            this.tl = null;
-            this.t = new File("src/muistipeli/pelikentat/kortit"+koko+".txt");
-            try {
-                this.tl = new Scanner(t);
-            } catch (Exception poikkeus) {
-                System.out.println("Tiedostoa ei voitu lukea. Virhe: " + poikkeus.getMessage() ); // mihin ohjataan?
-            } while (this.tl.hasNextLine()) {
-                String rivi = this.tl.nextLine();
-                this.ikonit.add(rivi);
-                this.ikonit.add(rivi);
-            }  
-            this.tl.close();
-            this.kaantopuoli = "src/muistipeli/kuvat/nurjapuoli.gif";
-        } else {
-            System.out.println("Pelikentän koko ei ole mahdollinen.");
-        }*/
-    
+   
     
     private boolean haeIkonitTiedostosta(int koko) {
         this.ikonikuvat = new ArrayList<String>(); 
@@ -112,16 +90,7 @@ public class Muistipelikortit {
         return this.onkoKuvia;
     }
     
-    ///public String getKaantopuoli() {
-       // return this.kaantopuoli;
-    //}
-    
-    /*Metodi tarkistaa, onko pyydetyn muistipelin koko validi.*/
-    /*public boolean tarkistaKoko(int annettuKoko) {
-        if (annettuKoko == 2 || annettuKoko == 4 || annettuKoko == 6) {
-            return true;
-        } return false; 
-    }*/
+   
     
     /* Metodi palauttaa listallisen ikoneita halutun kokoiseen muistipeliin.*/
     public ArrayList<String> annaIkonit() {

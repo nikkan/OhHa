@@ -1,6 +1,6 @@
 src/muistipeli/kuvat/ankkuri.gif
 src/muistipeli/kuvat/lintuhakki.gif
-src/muistipeli/kuvat/kenka.gif
+src/muistipeli/kuvat/kenka.png
 src/muistipeli/kuvat/kompassi.gif
 src/muistipeli/kuvat/kirja.gif
 src/muistipeli/kuvat/lasit.gif

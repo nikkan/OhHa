@@ -22,8 +22,6 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 import muistipeli.sovelluslogiikka.Kortti;
 import muistipeli.sovelluslogiikka.Muistipelikortit;
 
@@ -113,8 +111,7 @@ public class Pelikentta {
         //this.pelikentta.add(testi);
         
         return korttipohja;
-        
-        
+    
     }
     
    

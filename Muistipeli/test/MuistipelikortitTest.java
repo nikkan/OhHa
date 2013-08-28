@@ -26,28 +26,7 @@ public class MuistipelikortitTest {
                 + "src/muistipeli/kuvat/lasit.gif,"
                 + "src/muistipeli/kuvat/lasit.gif,", vastaus);
     }
-    
-    @Test
-    public void huomaakoSyotteenKoonTarkistajaVirheellisenKoon() {
-        this.kortit = new Muistipelikortit(2);
-        boolean tarkista = this.kortit.tarkistaKoko(3);
-        assertEquals(false, tarkista);
-    }
-    
-    @Test
-    public void toimiikoSyotteenKoonTarkistajaOikeinValidillaArvolla() {
-        this.kortit = new Muistipelikortit(2);
-        boolean tarkista = this.kortit.tarkistaKoko(2);
-        assertEquals(true, tarkista);
-    }
-    
-    @Test
-    public void lisaaIkoniToimiiOikein() {
-        this.kortit = new Muistipelikortit();
-        this.kortit.lisaaIkoni("Testi");
-        String ikoni = this.kortit.toString();
-        assertEquals("Testi,", ikoni);
-    }
+  
     
     
     

@@ -5,8 +5,10 @@
 package muistipeli.sovelluslogiikka;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.image.ImageObserver;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,6 +34,8 @@ public class Kortti extends JButton {
         this.kaantopuoli = kaantopuoli;
         super.setIcon(this.kaantopuoli);
         super.setDisabledIcon(this.oikeapuoli);
+        super.setBorder(new LineBorder(Color.BLACK, 1));
+        
         this.pelityyppi = true;
         super.setFocusPainted(false);
     }

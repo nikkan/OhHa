@@ -92,7 +92,9 @@ public class Pelitoiminnot {
     
     /*Metodi tulostaa pisteet käyttöliittymän alapalkkiin.*/
     public void asetaPisteet() {
-        if (this.parit == this.pelikentta.getKoko()) {
+        int lkm = 0;
+        lkm = this.pelikentta.getKoko();
+        if (this.parit == lkm*lkm/2) {
             this.pistepalkki.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
             this.pistepalkki.getTallennaNappi().setVisible(true);
         } else {
