@@ -5,15 +5,11 @@ import muistipeli.kayttoliittyma.Pelikentta;
 import muistipeli.kayttoliittyma.Pistepalkki;
 
 /**
- *
- * Ohjelmoinnin harjoitustyo, loppukesa 2013
- * 
- * @author Anu Nikkanen
- * 
  * Pelitoiminnot-luokka toteuttaa muistipelin varsinaisen pelilogiikan, eli
- * käynnistää kierroksen ja suorittaa yhteen kierrokseen liittyvät toiminnot,
- * kuten korttien kääntämisen ja niiden vertailemisen.
+ * suorittaa yhteen kierrokseen liittyvät pelitoiminnot.
  * 
+ * @author Anu N.
+ *
  */
 
 public class Pelitoiminnot {
@@ -26,6 +22,12 @@ public class Pelitoiminnot {
     private Kortti kortti1;
     private Kortti kortti2;
     
+    /**
+     * Konstruktori asettaa Pelitoiminnot nollatilaan.
+     * 
+     * @param pelikentta Pelikentta-luokan ilmentymä
+     * @param pistepalkki Pistepalkki-luokan ilmentymä
+     */
     public Pelitoiminnot(Pelikentta pelikentta, Pistepalkki pistepalkki) {
         this.laskin = new Pistelaskuri();
         this.kierros = 0;
@@ -38,7 +40,11 @@ public class Pelitoiminnot {
         this.kortti2 = null;
     }
     
-    /* Metodi suorittaa muistipelin pelikierroksen */
+    /**
+     * Metodi suorittaa muistipelin yhden pelikierroksen
+     * 
+     * @param kortti Kortti-luokan ilmentymä (tiedot muistipelikortista)
+     */
     public void pelikierros(Kortti kortti) { 
         this.kierros++;
         if (kaannetaan == true) {
@@ -47,16 +53,21 @@ public class Pelitoiminnot {
         kortti.kaannaOikeinPain();
         tallenna(kortti);
         
+        // Katsotaan, olivatko kaksi korttia parit ja suoritetaan vastaavat toiminnot
         if (this.kierros == 2 && onkoPari() == false) {
-            eiPari();
+            eiPari(); 
         } if (this.kierros == 2 && onkoPari() == true) {
             onPari();
         }
-        asetaPisteet();
-        
+        asetaPisteet();  
     } 
     
-    /* Metodi tallentaa kortin (ImageIconin tiedoston nimen ja JButtonin) toiseen kahdesta muuttujasta.*/
+    /**
+     * Metodi tallentaa parametrina saadun Kortin toiseen kahdesta muuttujasta
+     * riippuen siitä, onko ensimmäinen muuttuja jo täynnä.
+     * 
+     * @param kortti Kortti-luokan ilmentymä
+     */
     public void tallenna(Kortti kortti) {
         if (this.kortti1 == null) {
             this.kortti1 = kortti;
@@ -65,7 +76,11 @@ public class Pelitoiminnot {
         }
     }
     
-    /* Metodi vertaa, ovatko kaksi korttia (=niiden kuvapuolet) samoja.*/
+    /**
+     * Metodi vertaa, ovatko kahden kortin kuvapuolet samoja.
+     * 
+     * @return true, jos kuvapuolet (eli tiedostonimet) ovat samoja
+     */
     public boolean onkoPari() {
         if (this.kortti1.getKuvapuoli().equals(this.kortti2.getKuvapuoli()) ) {
             return true;
@@ -73,14 +88,22 @@ public class Pelitoiminnot {
         
     }
     
-    /*Metodi suoritetaan, mikäli kaksi korttia eivät ole pareja.*/
+    /**
+     * Metodi suoritetaan, mikäli kaksi korttia eivät ole pareja.
+     * 
+     * Asetetaan tieto, että kortit käännetään seuraavan kierroksen alussa.
+     */
     public void eiPari() {
         kierros = 0;
         this.kaannetaan = true;   
         this.arvaukset++;
     }
     
-    /* Metodi suoritetaan, mikäli kaksi korttia ovat parit.*/    
+    /**
+     * Metodi suoritetaan, mikäli kaksi korttia ovat parit.
+     * 
+     * Tyhjennetään muuttujat ja kasvatetaan pistelaskurin arvoa ja parien lukumäärää.
+     */    
     public void onPari() {
         this.kortti1 = null;
         this.kortti1 = null;
@@ -90,24 +113,34 @@ public class Pelitoiminnot {
         this.arvaukset=0;
     }
     
-    /*Metodi tulostaa pisteet käyttöliittymän alapalkkiin.*/
+    /**
+     * Metodi tulostaa pelaajan pisteet käyttöliittymän oikeaan reunaan.
+     */
     public void asetaPisteet() {
         int lkm = 0;
         lkm = this.pelikentta.getKoko();
         if (this.parit == lkm*lkm/2) {
             this.pistepalkki.getOmatPisteetKentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
-            this.pistepalkki.getTallennaNappi().setVisible(true);
+            // jos peli päättyi, annetaan pelaajalle mahdollisuus tallentaa pisteet
+            this.pistepalkki.getTallennaNappi().setVisible(true); 
         } else {
             this.pistepalkki.getOmatPisteetKentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
         }
     }
     
-    /* Metodi palauttaa pelaajan loppupisteet */
+    /**
+     * Metodi palauttaa pelaajan loppupisteet.
+     * 
+     * @return pisteet kokonaislukuna
+     */
     public int finalScore() {
         return this.laskin.annaArvo();
     }
     
-    /*Metodi kääntää edellisen kierroksen kortit, mikäli paria ei löytynyt*/
+    /**
+     * Metodi kääntää edellisen kierroksen kortit, mikäli paria ei löytynyt
+     * ja tyhjentää kortti1- ja kortti2-muuttujat
+     */
     public void kaannetaanEdelliset() {
         this.kortti1.kaannaNurinPain();
         this.kortti2.kaannaNurinPain();
@@ -117,6 +150,9 @@ public class Pelitoiminnot {
         
     }
     
+    /**
+     * Metodi nollaa kaikki pelitoiminnot uutta peliä varten.
+     */
     public void nollaaKaikki() {
         this.kierros = 0;
         this.laskin = new Pistelaskuri();

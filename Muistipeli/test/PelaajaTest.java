@@ -5,10 +5,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Ohjelmoinnin harjoitustyo, loppukesa 2013
+ * Luokka vastaa Pelaaj-luokan testaamisesta.
  * 
- * @author Anu Nikkanen
- * 
+ * @author Anu N.
  */
 public class PelaajaTest {
     

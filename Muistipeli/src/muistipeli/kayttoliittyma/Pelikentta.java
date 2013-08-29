@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import muistipeli.sovelluslogiikka.Kortti;
-import muistipeli.sovelluslogiikka.Muistipelikortit;
+import muistipeli.sovelluslogiikka.Ikonikuvat;
 
 /**
  * Pelikentta-luokka vastaa halutun kokoisen muistipelikentän luomisesta ja 
@@ -26,7 +26,7 @@ public class Pelikentta {
     
     private JPanel pelikentta;
     private JPanel tausta;
-    private Muistipelikortit kortit;
+    private Ikonikuvat kortit;
     private ArrayList<String> ikonit;
     private ArrayList<Kortti> korttilista; 
     private int koko;
@@ -43,9 +43,9 @@ public class Pelikentta {
         this.mainPanel = mainPanel;
          
         // luodaan uusi Muistipelikortit-olio, jolle annetaan parametrina koko
-        this.kortit = new Muistipelikortit(this.koko);
+        this.kortit = new Ikonikuvat(this.koko);
         // haetaan ikonit eli muistipelikorttien kuvat
-        this.ikonit = kortit.annaIkonit();
+        this.ikonit = kortit.getIkonit();
         // luodaan lista, johon muistipelikortit tallennetaan
         this.korttilista = new ArrayList<Kortti>(); 
         // luodaan pelikenttä-paneli
@@ -84,7 +84,7 @@ public class Pelikentta {
         return this.pelikentta;
     }
     
-    public Muistipelikortit getMuistipelikortit() {
+    public Ikonikuvat getMuistipelikortit() {
         return this.kortit;
     }
     
@@ -105,8 +105,8 @@ public class Pelikentta {
      */
     public JPanel getUusiPeli(int uusiKoko) {
         this.koko = uusiKoko;
-        this.kortit = new Muistipelikortit(this.koko);
-        this.ikonit = kortit.annaIkonit();
+        this.kortit = new Ikonikuvat(this.koko);
+        this.ikonit = kortit.getIkonit();
         this.tausta = new JPanel(new GridLayout(this.koko,this.koko));
         this.luoKortit(this.tausta);   
         return this.tausta;

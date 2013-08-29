@@ -2,22 +2,28 @@
 package muistipeli.sovelluslogiikka;
 
 /**
- * Ohjelmoinnin harjoitustyo, loppukesa 2013
+ * Pelaaja-luokka vastaa pelaajan nimi- ja pistetiedoista sekä näiden
+ * vertailusta muihin pelaajiin.
  * 
- * @author Anu Nikkanen
+ * Luokka implementoi Comparable-rajapinnan
  * 
- * Luokka tarjoaa välineitä pelaajan tietojen tallentamista ja pelaajien
- * pisteiden vertailemista varten.
+ * @author Anu N.
  * 
  */
 
 public class Pelaaja implements Comparable<Pelaaja> {
+    
     private String nimi;
     private int pisteet;
     
-    public Pelaaja(String n, int p) {
-        this.nimi = n;
-        this.pisteet = p;
+    /**
+     * Konstruktori asettaa pelaajalle nimi- ja pistetiedot
+     * @param nimi Pelaajan nimimerkki merkkijonona
+     * @param pisteet Pelaajan pisteet kokonaislukuna 
+     */
+    public Pelaaja(String nimi, int pisteet) {
+        this.nimi = nimi;
+        this.pisteet = pisteet;
     }
     
     public String getNimi() {
@@ -37,8 +43,15 @@ public class Pelaaja implements Comparable<Pelaaja> {
         return this.getNimi() + ":" + this.getPisteet();
     }
     
-    /* Metodi tarjoaa välineet, joiden avulla pelaajat voidaan asettaa 
-    järjestykseen ensisijaisesti pisteiden ja toissijaisesti nimen perusteella.*/
+    /**
+     * CompareTo-metodi palauttaa järjestystiedon pelaajien vertilusta.
+     * 
+     * Pelaajia vertaillaan ensisijaisesti pisteiden ja toissijaisesti nimen 
+     * perusteella.
+     * 
+     * @param pelaaja pelaaja, johon 'tätä' pelaajaa verrataan
+     * @return Vertailutieto kokonaislukuna 
+     */
     @Override
     public int compareTo(Pelaaja pelaaja) {
         if (this.pisteet == pelaaja.getPisteet() ) { 

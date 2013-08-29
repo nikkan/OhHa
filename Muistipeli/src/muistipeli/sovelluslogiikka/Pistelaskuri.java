@@ -3,19 +3,20 @@ package muistipeli.sovelluslogiikka;
 
 
 /**
- * Ohjelmoinnin harjoitustyo, loppukesa 2013
+ * Pistelaskuri laskee pelaajan muistipelissä saavuttamat pisteet. 
  * 
- * @author Anu Nikkanen
+ * Mitä vähemmän arvauksia ennen paria, sitä enemmän pisteitä pelaaja saa.
  * 
- * Pistelaskuri laskee pelaajan muistipelissä saavuttamat pisteet. Mitä
- * vähemmän arvauksia, sitä enemmän pisteitä pelaaja saa.
- * 
+ * @author Anu N.
  */
 public class Pistelaskuri {
     
     private int arvo;
     private int arvaustenLkm;
     
+    /**
+     * Konstruktori asettaa laskurin nollatilaan.
+     */
     public Pistelaskuri() {
         this.arvo = 0;
         this.arvaustenLkm = 0;
@@ -37,10 +38,14 @@ public class Pistelaskuri {
         this.arvo++; 
     }
     
-    /* Metodi kasvattaa laskurin arvoa arvausten määrän huomioon ottaen.
-     * Mikäli arvausten lkm on pienempi kuin 10, 
-     * oikeasta parista annetaan
-    /* pisteitä (10-arvausten) lkm.*/
+    /** Metodi kasvattaa laskurin arvoa arvausten määrän huomioon ottaen.
+     * 
+     *  Mikäli arvausten lkm on pienempi kuin 10, 
+     *  oikeasta parista annetaan
+     *  pisteitä (10-arvausten lkm).
+     * 
+     * @param arvaukset Pelaajan arvausten määrä
+     */
     public void kasvataArvoa(int arvaukset) {
         if (arvaukset<10) {
             this.arvo=this.arvo+(10-arvaukset);

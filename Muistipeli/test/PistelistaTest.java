@@ -34,7 +34,7 @@ public class PistelistaTest {
     public void tulostaPisteetPalauttaaPisteet() {
         this.lista.lisaaPisteet("Testi", 10);
         String pisteet = this.lista.tulostaPisteet();
-        assertEquals("Testi:10\n", pisteet);
+        assertEquals("<html><strong><br>TOP 10 PISTEET</strong></br><br>1. Testi:10\n<br></hmtl>", pisteet);
     }
     
     @Test
@@ -44,7 +44,7 @@ public class PistelistaTest {
         this.lista.lisaaPisteet("Testi2", 5);
         this.lista.haePisteet();
         String pisteet = this.lista.tulostaPisteet();
-        assertEquals("Testi:10\n", pisteet);
+        assertEquals("<html><strong><br>TOP 10 PISTEET</strong></br><br>1. Testi:10\n<br></hmtl>", pisteet);
     }
     
     
