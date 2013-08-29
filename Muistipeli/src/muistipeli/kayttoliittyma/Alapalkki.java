@@ -8,31 +8,23 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
- * Ohjelmoinnin harjoitustyo, loppukesa 2013
+ * Alapalkki-luokassa luodaan graafisen käyttöliittymän alalaitaan palkki,
+ * jossa on pelikentän koon valitsemiseen ja pelin päättämiseen liittyvät napit. 
  * 
- * @author Anu Nikkanen
- * 
- * LuoAlapalkki-luokassa luodaan käyttöliittymän alalaitaan palkki,
- * jossa on pelikentän koon valitseen liittyviä nappeja. Tällä hetkellä
- * kentän koon valinta ei ole kätössä, joten napit eivät ole pelaajan
- * käytettävissä.
- * 
+ * @author Anu N.
  */
-
 
 public class Alapalkki {
     private JPanel alapalkki;
     private JButton uusipeli1, uusipeli2, uusipeli3, lopeta;
     
-    
     /**
-     * Luo alapalkin ja siihen sisältyvät napit käyttöliittymään.
+     * Konstruktori luo alapalkin ja siihen sisältyvät napit käyttöliittymään.
      * 
-     * @param mainPanel Käyttöliittymän pääpaneli, johon alapalkki lisätään.
-     *                  mainPanelilla on GridBag -layout
+     * @param mainPanel Käyttöliittymän pääpaneli, johon alapalkki lisätään                
      */
     public Alapalkki(JPanel mainPanel ) {
-        
+        // luodaan alapalkki ja asetetaan taustaväri 
         this.alapalkki = new JPanel();
         this.alapalkki.setBackground(Color.black);
         
@@ -43,7 +35,7 @@ public class Alapalkki {
         this.uusipeli2 = new JButton("Uusi peli 4x4");
         this.uusipeli2.setFocusPainted(false);
         this.uusipeli2.setEnabled(true);
-        this.uusipeli3 = new JButton("Uusi peli 8x8");
+        this.uusipeli3 = new JButton("Uusi peli 6x6");
         this.uusipeli3.setEnabled(true);
         this.uusipeli3.setFocusPainted(false);
         this.lopeta = new JButton("Lopeta");
@@ -67,7 +59,7 @@ public class Alapalkki {
         mainPanel.add(alapalkki, c);
         
     }
-    
+            
     public JButton get2x2() {
         return this.uusipeli1;
     }

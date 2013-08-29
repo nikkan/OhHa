@@ -1,17 +1,6 @@
 
 package muistipeli.kayttoliittyma;
 
-/**
- * Ohjelmoinnin harjoitustyo, loppukesa 2013
- * 
- * @author Anu Nikkanen
- * 
- * LuoPistepalkki-luokassa luodaan käyttöliittymään oikeaan yläkulmaan
- * palkki, johon tulostetaan käyttäjän pisteet pelin aikana ja annetaan
- * käyttäjälle mahdollisuus tallentaa omat pisteensä.
- * 
- */
-
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
@@ -21,43 +10,60 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Pistepalkki-luokan vastuuna on luoda Muistipelin graafisen käyttöliittymään
+ * oikeaan yläkulmaan palkki, johon tulostetaan käyttäjän pisteet pelin aikana 
+ * ja annetaan käyttäjälle mahdollisuus tallentaa omat pisteensä.
+ * 
+ * @author Anu N.
+ */
 
 public class Pistepalkki {
     
     private JButton tallennaPisteet;
     private JButton ok;
+    private JPanel pistepalkki;
     private JLabel annaNimim;
     private JTextField nimim;
-    private JLabel pisteesi;
+    private JLabel omatPisteet;
     
-    
+   /**
+    * Konstruktori luo pistepalkin ja siihen sisältyvät komponentit käyttöliittymään.
+    * 
+    * @param mainPanel Käyttöliittymän pääpaneli, johon Pistepalkki lisätään                     
+    */
     public Pistepalkki(JPanel mainPanel) {
-       
-        JPanel score = new JPanel(new GridLayout(6, 1));
-        score.setOpaque(true);
-        score.setBackground(Color.pink);
+        // Luodaan pistepalkki ja laitetaan sille asetukset
+        this.pistepalkki = new JPanel(new GridLayout(6, 1));
+        this.pistepalkki.setOpaque(true);
+        this.pistepalkki.setBackground(Color.pink);
         
-        pisteesi = new JLabel();
-        pisteesi.setText("<html>"+" # "+"<strong>Pisteesi: </strong>"+" "+0+"</html>");
-        score.add(pisteesi);
+        // Luodaan ja lisätään omatPisteet-kenttä
+        this.omatPisteet = new JLabel();
+        this.omatPisteet.setText("<html>"+" # "+"<strong>Pisteesi: </strong>"+" "+0+"</html>");
+        this.pistepalkki.add(this.omatPisteet);
         
-        tallennaPisteet = new JButton("Tallenna pisteet");
-        tallennaPisteet.setVisible(false);
-        score.add(tallennaPisteet);
+        // Luodaan ja lisätään 'Tallenna pisteet'-nappi
+        this.tallennaPisteet = new JButton("Tallenna pisteet");
+        this.tallennaPisteet.setVisible(false);
+        this.pistepalkki.add(this.tallennaPisteet);
         
-        annaNimim = new JLabel("Anna nimimerkkisi");
-        annaNimim.setVisible(false);
-        score.add(annaNimim);
+        // Luodaan ja lisätään JLabel, joka kehoittaa käyttäjää antamaan nimimerkin
+        this.annaNimim = new JLabel("Anna nimimerkkisi");
+        this.annaNimim.setVisible(false);
+        this.pistepalkki.add(this.annaNimim);
         
-        nimim = new JTextField();
-        nimim.setVisible(false);
-        score.add(nimim);
+        // Luodaan ja lisätään tekstikenttä, johon käyttäjä voi syöttää nimimerkin
+        this.nimim = new JTextField();
+        this.nimim.setVisible(false);
+        this.pistepalkki.add(this.nimim);
         
-        ok = new JButton("OK");
-        ok.setVisible(false);
-        score.add(ok);
+        // Luodaan ja lisätään 'OK'-nappi
+        this.ok = new JButton("OK");
+        this.ok.setVisible(false);
+        this.pistepalkki.add(this.ok);
         
-        // GridBagConstraints // 
+        // Asetetaan GridBag-rajoitukset 
         GridBagConstraints c = new GridBagConstraints();
        
         c.gridx = 3;
@@ -66,31 +72,27 @@ public class Pistepalkki {
         c.insets = new Insets(2,0,0,0);
         c.fill = GridBagConstraints.HORIZONTAL;
         
-        mainPanel.add(score, c);
+        // Lisätään pistepalkki mainPaneliin
+        mainPanel.add(this.pistepalkki, c);
     }
     
-    /* Metodi palauttaa 'Tallenna' -napin */
     public JButton getTallennaNappi() {
         return this.tallennaPisteet;
     }
     
-    /* Metodi palauttaa 'OK' -napin */
     public JButton getOkNappi() {
         return this.ok;
     }
     
-    /* Metodi palauttaa tekstikentän, johon käyttäjä voi kirjoittaa nimimerkkinsä */
     public JTextField getNimim() {
         return this.nimim;
     }
     
-    /* Metodi palauttaa tekstikentän, jonka teksti kehoittaa käyttäjää lisäämään nimimerkkinsä */
     public JLabel getAnnaNimim() {
         return this.annaNimim;
     }
     
-    /* Metodi palauttaa kentän, jossa ovat käyttäjän pisteet */
-    public JLabel getPisteesikentta() {
-        return this.pisteesi;
+    public JLabel getOmatPisteetKentta() {
+        return this.omatPisteet;
     }
 }

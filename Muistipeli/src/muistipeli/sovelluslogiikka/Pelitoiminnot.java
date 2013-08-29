@@ -95,10 +95,10 @@ public class Pelitoiminnot {
         int lkm = 0;
         lkm = this.pelikentta.getKoko();
         if (this.parit == lkm*lkm/2) {
-            this.pistepalkki.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
+            this.pistepalkki.getOmatPisteetKentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
             this.pistepalkki.getTallennaNappi().setVisible(true);
         } else {
-            this.pistepalkki.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
+            this.pistepalkki.getOmatPisteetKentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+laskin.annaArvo()+"</html>");
         }
     }
     
@@ -122,9 +122,11 @@ public class Pelitoiminnot {
         this.laskin = new Pistelaskuri();
         this.arvaukset = 0;
         this.kaannetaan = false;
-        this.pistepalkki.getPisteesikentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+0+"</html>");
+        this.pistepalkki.getOmatPisteetKentta().setText("<html>"+" #"+"<strong> Pisteesi:</strong>"+" "+0+"</html>");
         this.parit = 0;
         this.pistepalkki.getTallennaNappi().setVisible(false);
+        this.kortti1 = null;
+        this.kortti2 = null;
     }
 
 }

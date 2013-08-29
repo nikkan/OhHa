@@ -1,171 +1,147 @@
 
 package muistipeli.kayttoliittyma;
 
-/**
- * Ohjelmoinnin harjoitustyo, loppukesa 2013
- * 
- * @author Anu Nikkanen
- * 
- * LuoPelikentta-luokassa luodaan uusi halutun kokoinen muistipelikenttä.
- * Tällä hetkellä kentän koko on fiksattu 2x2.
- * 
- */
-
 import java.awt.Color;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import muistipeli.sovelluslogiikka.Kortti;
 import muistipeli.sovelluslogiikka.Muistipelikortit;
 
+/**
+ * Pelikentta-luokka vastaa halutun kokoisen muistipelikentän luomisesta ja 
+ * lisäämisestä mainPaneliin graafiseen käyttöliittymään.
+ * 
+ * Luokka palauttaa getUusiPeli-metodin välityksellä myös uuden pelikentän.
+ * 
+ * @author Anu N.
+ * 
+ */
 
 public class Pelikentta {
     
     private JPanel pelikentta;
-    private JPanel korttipohja;
+    private JPanel tausta;
     private Muistipelikortit kortit;
     private ArrayList<String> ikonit;
-    private HashMap<JButton, String> korttilista;
-    private ArrayList<Kortti> korttilista2; // TESTIITESTII!
+    private ArrayList<Kortti> korttilista; 
     private int koko;
-    private GridBagConstraints gbc;
-    private JPanel paneli;
-    private Kortti kortti; // tESTIITESTII
+    private JPanel mainPanel;
     
-    public Pelikentta(int koko, JPanel paneli) {
+    /**
+     * Konstruktori luo muistipelikentän ja siihen sisältyvät kortit (=napit)
+     * 
+     * @param koko Kokonaisluku, joka kertoo halutun muistipelikentän koon.
+     * @param mainPanel Paneli, johon muistipelikenttä lisätään 
+     */
+    public Pelikentta(int koko, JPanel mainPanel) {
         this.koko = koko;
+        this.mainPanel = mainPanel;
+         
+        // luodaan uusi Muistipelikortit-olio, jolle annetaan parametrina koko
         this.kortit = new Muistipelikortit(this.koko);
+        // haetaan ikonit eli muistipelikorttien kuvat
         this.ikonit = kortit.annaIkonit();
-        this.korttilista = new HashMap<JButton, String>();
-        this.korttilista2 = new ArrayList<Kortti>();  // TESTIITESTIILISÄTTY!
-        this.gbc = new GridBagConstraints();
-        this.paneli = paneli;
+        // luodaan lista, johon muistipelikortit tallennetaan
+        this.korttilista = new ArrayList<Kortti>(); 
+        // luodaan pelikenttä-paneli
         this.pelikentta = new JPanel(new GridLayout(1,1));
-  
-       
-        //luoKortit(pelikentta);
-        pelikentta.setMaximumSize(new Dimension(400, 400));
-        pelikentta.setMinimumSize(new Dimension(400, 400));
-        pelikentta.setPreferredSize(new Dimension(400, 400));
-        pelikentta.setBackground(Color.WHITE);
+        // annetaan pelikentälle asetukset 
+        this.pelikentta.setMaximumSize(new Dimension(400, 400));
+        this.pelikentta.setMinimumSize(new Dimension(400, 400));
+        this.pelikentta.setPreferredSize(new Dimension(400, 400));
+        this.pelikentta.setBackground(Color.WHITE);
         
-  
-        // GridBagConstraints
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridheight = 1;
-        gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.insets = new Insets(2,2,2,2);
+        // asetetaan GridBagConstraints
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 3;
+        c.gridheight = 1;
+        c.gridwidth = 1;
+        c.fill = GridBagConstraints.NONE;
+        c.insets = new Insets(2,2,2,2);
         
-        this.korttipohja = new JPanel(new GridLayout(this.koko,this.koko));
-        luoKortit(korttipohja);
-        this.pelikentta.add(korttipohja);
-        
-        this.paneli.add(pelikentta, gbc);
+        // luodaan tausta, johon kortit asetetaan
+        this.tausta = new JPanel(new GridLayout(this.koko,this.koko));
+        // luodaan kortit ja asetetaan ne tausta-paneliin
+        this.luoKortit(this.tausta);
+        // lisätään tausta pelikenttään
+        this.pelikentta.add(this.tausta);
+        // lisätään pelikenttä mainPaneliin
+        this.mainPanel.add(this.pelikentta, c);
     
     }
-    
-    /* Metodi palauttaa HashMap:ssä pelilaudan kortit (ts. JButtonit) ja
-     * korttien kääntöpuolet (ImageIconit) */
-    public HashMap<JButton, String> getKorttilista() {
+     
+    public ArrayList<Kortti> getKorttilista() {
         return this.korttilista;
-    }
-    
-    public ArrayList<Kortti> getKorttilista2() {
-        return this.korttilista2;
     }
     
     public JPanel getPelikentta() {
         return this.pelikentta;
     }
     
-    /* Metodi palauttaa ArrayList:ssä korttien kuvapuolten ImageIconit */
     public Muistipelikortit getMuistipelikortit() {
         return this.kortit;
     }
     
     public JPanel getKorttipohja() {
-        return this.korttipohja;
+        return this.tausta;
     }
     
     public int getKoko() {
         return this.koko;
     }
     
+    /**
+     * Palauttaa uuden pelin, eli taustapaneelin, johon on asetettu
+     * halutun koon verran muistipelikortteja sekoitettuna.
+     * 
+     * @param uusiKoko Uuden muistipelikentän koko
+     * @return JPanel tautapaneeli, johon uudet muistipelikortit on asetettu
+     */
     public JPanel getUusiPeli(int uusiKoko) {
         this.koko = uusiKoko;
         this.kortit = new Muistipelikortit(this.koko);
         this.ikonit = kortit.annaIkonit();
-        this.korttilista = new HashMap<JButton, String>();
-       
-        this.korttipohja = new JPanel(new GridLayout(this.koko,this.koko));
-        luoKortit(korttipohja);
-        //this.pelikentta.add(testi);
-        
-        return korttipohja;
-    
+        this.tausta = new JPanel(new GridLayout(this.koko,this.koko));
+        this.luoKortit(this.tausta);   
+        return this.tausta;
     }
     
    
-    /* luoKortit() -metodi luo muistipelikortteina toimivat JButtonit.*/
-    private JPanel luoKortit(JPanel paneeli) {
+    /**
+     * Luokan yksityinen metodi, joka lisää muistipelikortit taustaan. 
+     * 
+     * Metodi hakee kuvaikonit, jos ne löytyvät. Jos kuvia ei löydy, kuvapuoleksi
+     * tulee numeroita.
+     * 
+     * @param paneeli Taustapaneeli, johon muistipelikortit (JButtonit) lisätään.
+     */
+    private void luoKortit(JPanel paneeli) {
         
         for (int i=0; i<this.koko*this.koko; i++) {
+            // Jos kuvapuolet löytyy, haetaan ja asetetaan ikonit kortin oikealle
+            // ja nurjalle puolelle. Lisätään kortti taustapaneeliin ja korttilistaan.
             if (kortit.onkoKuvia() == true) {
                 ImageIcon kaantopuoli = new ImageIcon(ikonit.get(this.koko*this.koko));
                 ImageIcon kuvapuoli = new ImageIcon(ikonit.get(i));
                 Kortti k = new Kortti(kuvapuoli, kaantopuoli);
                 paneeli.add(k);
-                this.korttilista2.add(k);
-                
+                this.korttilista.add(k);
+            // Jos kuvaikoneita ei löydy, lisätään numeroita 'kuviksi' ja lisätään
+            // kortti taustapaneeliin ja korttilistaan.    
             } else {
                 Kortti k = new Kortti(ikonit.get(i));
                 paneeli.add(k);
-                this.korttilista2.add(k);
+                this.korttilista.add(k);
             }
              
         }
-            return this.paneli;
-        }
-        
-        /*for (int i=0; i<this.koko*this.koko; i++) { 
-            if (kortit.onkoKuvia() == true) {
-                ImageIcon kuva = new ImageIcon(ikonit.get(this.koko*this.koko)); 
-                JButton b = new JButton(kuva); 
-                ImageIcon kuva2 = new ImageIcon(ikonit.get(i)); 
-                b.setFocusPainted(false);
-                b.setDisabledIcon(kuva2);
-                b.setHorizontalAlignment(SwingConstants.CENTER);
-                b.setVerticalAlignment(SwingConstants.CENTER);
-                // b.setPreferredSize(new Dimension(2,2));
-                b.setBorder(new LineBorder(Color.BLACK, 1));
-                //b.setMargin(new Insets(0, 0, 0, 0));
-                this.korttilista.put(b, ikonit.get(i));
-                paneeli.add(b); 
-            } else {
-                JButton b = new JButton("");
-                //ImageIcon kuva2 = new ImageIcon(ikonit.get(i)); 
-                b.setFocusPainted(false);
-           
-                //b.setDisabledIcon(kuva2);
-                b.setHorizontalAlignment(SwingConstants.CENTER);
-                b.setVerticalAlignment(SwingConstants.CENTER);
-                // b.setPreferredSize(new Dimension(2,2));
-                b.setBorder(new LineBorder(Color.BLACK, 1));
-                //b.setMargin(new Insets(0, 0, 0, 0));
-                this.korttilista.put(b, ikonit.get(i));
-                paneeli.add(b); 
-            }
-      
-           
-        } return paneeli;
-    }*/
+          
+     }
+       
 }

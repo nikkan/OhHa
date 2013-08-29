@@ -13,18 +13,18 @@ import muistipeli.sovelluslogiikka.Pelitoiminnot;
  * Nappien avulla käyttäjä voi valita uuden pelin 2x2, 4x4 tai 6x6 -kokoisella
  * muistipelikentällä tai lopettaa pelaamisen. 
  * 
- * @author Anu Nikkanen
+ * @author Anu N.
  */
 
 public class AlapalkinKuuntelija implements ActionListener {
     private Pelikentta pelikentta;
     private Alapalkki alapalkki;
-    private KorttienKuuntelija klikkaustenkuuntelija;
+    private KorttienKuuntelija korttienkuuntelija;
     private Pelitoiminnot pelitoiminnot;
  
     /**
-     * Asettaa luokan private-muuttujien arvoksi parametrina saadut arvot, eli
-     * kuuntelijan tarvitsemat tiedot muistipelistä ja käyttöliittymästä.
+     * Konstruktori asettaa luokan private-muuttujien arvoksi parametrina saadut 
+     * arvot, eli kuuntelijan tarvitsemat tiedot muistipelistä ja käyttöliittymästä.
      * 
      * @param pt Pelitoiminnot -luokan ilmentymä, sis. muistipelin pelitoiminnot
      * @param pk Pelikentta -luokan ilmentymä, sis. tiedot muistipelin pelikentästä
@@ -35,7 +35,7 @@ public class AlapalkinKuuntelija implements ActionListener {
     public AlapalkinKuuntelija(Pelitoiminnot pt, Pelikentta pk, Alapalkki ap, KorttienKuuntelija kk) {
         this.pelikentta = pk;
         this.alapalkki = ap;
-        this.klikkaustenkuuntelija = kk;
+        this.korttienkuuntelija = kk;
         this.pelitoiminnot = pt;
     }
     
@@ -86,8 +86,8 @@ public class AlapalkinKuuntelija implements ActionListener {
             this.pelikentta.getPelikentta().add(pelikentta.getUusiPeli(koko));
             
             // lisätään uusille korteille klikkaustenKuuntelija
-            for (Kortti k : this.pelikentta.getKorttilista2() ) {
-            k.addActionListener(this.klikkaustenkuuntelija);
+            for (Kortti k : this.pelikentta.getKorttilista() ) {
+            k.addActionListener(this.korttienkuuntelija);
             }
             
             // nollataan vanhat pelitoiminnot

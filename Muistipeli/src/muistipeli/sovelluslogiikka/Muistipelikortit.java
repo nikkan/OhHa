@@ -48,7 +48,6 @@ public class Muistipelikortit {
             } this.onkoMahdollinen = true;
             this.onkoKuvia = false;
             this.kaantopuoli = " ";
-            System.out.println("ikonit:"+ikonikuvat.toString());
                
            } else {
                 this.onkoMahdollinen = false;
